@@ -1,12 +1,10 @@
-import './style.css';
-
-console.log('hello world :)');
+import "./style.css";
 
 function component() {
-  const element = document.createElement('div');
+  const element = document.createElement("div");
 
-  element.innerHTML = 'Hello webpack!';
-  element.classList.add('hello');
+  element.innerHTML = "Hello todo list!";
+  element.classList.add("hello");
 
   return element;
 }
