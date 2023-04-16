@@ -5,18 +5,35 @@ html, body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: rgb(34, 40, 49);
+  color: rgb(193, 224, 225);
+}
+
+.icons {
+  height: 20px;
+  width: auto;
+  filter: invert(100%) sepia(76%) saturate(556%) hue-rotate(153deg) brightness(90%) contrast(93%);
+}
+
+.edit-tools>.icons:hover,
+.plus-icon:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 .container {
-  padding: 0px clamp(10rem, 15%, 50vh);
+  padding: 0px clamp(1rem, 15%, 50vw);
 }
 
 h1 {
   font-size: 4rem;
+  background: -webkit-linear-gradient(rgb(193, 224, 221), rgb(0, 173, 181));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 h2 {
-  display: inline;
+  color: rgb(119, 197, 201);
 }
 
 .content {
@@ -25,9 +42,10 @@ h2 {
 
 .sidebar {
   flex-basis: clamp(20ch, 15%, 50ch);
-  padding: 2rem;
-  background-color: rgb(209, 209, 209);
+  padding: 1rem 2rem;
+  background-color: rgb(57, 62, 70);
   border-radius: 20px;
+  min-height: 60vh;
 }
 
 .filter,
@@ -38,20 +56,24 @@ h2 {
   flex-wrap: nowrap;
   padding: 0px 10px;
   height: 2.3rem;
+  margin: 10px 0px;
 }
 
 .filter:hover,
 .project:hover {
-    background-color: rgba(234, 234, 234, 0.5);
+    background-color: rgba(80, 85, 92, 0.5);
     border-radius: 5px;
     cursor: pointer;
-  }
+}
 
 .projects-header {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
+  padding-top: 2rem;
+  height: 4ch;
+  gap: 1rem;
 }
 
 .project {
@@ -63,14 +85,98 @@ h2 {
 .tasks-card {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  justify-content: space-between;
+  flex: 1 1 300px;
   margin-left: 30px;
-  padding: 2rem;
-  background-color: rgb(209, 209, 209);
+  padding: 1rem 2rem;
+  background-color: rgb(57, 62, 70);
   border-radius: 20px;
 }
 
-.icons {
-  height: 20px;
-  width: auto;
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(80, 85, 92, 0.5);
+  padding: 10px;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  gap: 1rem;
+}
+
+.task-info {
+  display: flex;
+  align-items: center;
+  color:rgb(214, 241, 241);
+}
+
+.edit-tools {
+  display: flex;
+  gap: 1rem;
+}
+
+.checkbox {
+  display: flex;
+  gap: 2rem;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.12em solid currentColor;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+  background-color: CanvasText;
+  transform-origin: bottom left;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+  background-color: rgb(193, 224, 225);
+}
+
+input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+  color: rgb(193, 224, 225);
+}
+
+.add-task-button {
+  width: 100px;
+  border: none;
+  background-image: linear-gradient(to right, rgb(0, 160, 169) 0%, rgb(0, 140, 147) 51%, rgb(83, 96, 96) 100%);
+  margin: 10px;
+  padding: 10px 15px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: rgb(226, 235, 235);
+  font-weight: bold;
+  border-radius: 20px;
+  display: block;
+  align-self: flex-end;
+}
+
+.add-task-button:hover {
+  transform: scale(1.1);
+  color: #fff;
+  text-decoration: none;
 }

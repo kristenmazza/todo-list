@@ -79,6 +79,7 @@ function componentFilterName(name) {
 function componentSectionHeader(heading) {
   const sectionHeader = document.createElement("h2");
   sectionHeader.textContent = heading;
+  sectionHeader.classList.add("section-header");
   return sectionHeader;
 }
 
@@ -123,7 +124,7 @@ function componentProjectTitle(title) {
 function componentAddProjectIcon() {
   const addProjectIcon = new Image();
   addProjectIcon.src = PlusIcon;
-  addProjectIcon.classList.add("icons");
+  addProjectIcon.classList.add("icons", "plus-icon");
   return addProjectIcon;
 }
 
@@ -146,15 +147,36 @@ function componentTask() {
 }
 
 function componentCheckbox() {
-  const checkbox = document.createElement("input");
-  checkbox.setAttribute("type", "checkbox");
+  const checkbox = document.createElement("div");
+  checkbox.classList.add("checkbox");
   return checkbox;
 }
 
-function componentTaskTitle(title) {
-  const taskTitle = document.createElement("p");
-  taskTitle.textContent = title;
-  return taskTitle;
+function componentCheckboxField() {
+  const checkboxField = document.createElement("input");
+  checkboxField.setAttribute("type", "checkbox");
+  checkboxField.classList.add("checkbox-field");
+  return checkboxField;
+}
+
+function componentCheckboxLabel(projectTitle) {
+  const checkboxLabel = document.createElement("label");
+  checkboxLabel.setAttribute("for", "checkbox");
+  checkboxLabel.classList.add("checkbox-label");
+  checkboxLabel.textContent = projectTitle;
+  return checkboxLabel;
+}
+
+function componentTaskInfo() {
+  const taskInfo = document.createElement("div");
+  taskInfo.classList.add("task-info");
+  return taskInfo;
+}
+
+function componentEditTools() {
+  const editTools = document.createElement("div");
+  editTools.classList.add("edit-tools");
+  return editTools;
 }
 
 function componentEditIcon() {
@@ -173,6 +195,7 @@ function componentTrashIcon() {
 
 function componentAddTaskButton() {
   const addTaskButton = document.createElement("button");
+  addTaskButton.classList.add("add-task-button");
   addTaskButton.textContent = "Add Task";
   return addTaskButton;
 }
@@ -192,6 +215,9 @@ export default function init() {
   const tasksCard = componentTasksCard();
   const tasks = componentTasks();
   const task = componentTask();
+  const taskInfo = componentTaskInfo();
+  const editTools = componentEditTools();
+  const checkbox = componentCheckbox();
 
   document.body.appendChild(container);
   container.appendChild(header);
@@ -220,9 +246,12 @@ export default function init() {
   tasksCard.appendChild(tasks);
   tasks.appendChild(componentSectionHeader("Tasks"));
   tasks.appendChild(task);
-  task.appendChild(componentCheckbox());
-  task.appendChild(componentTaskTitle("Finish project"));
-  task.appendChild(componentEditIcon());
-  task.appendChild(componentTrashIcon());
+  task.appendChild(taskInfo);
+  taskInfo.appendChild(checkbox);
+  checkbox.appendChild(componentCheckboxField());
+  checkbox.appendChild(componentCheckboxLabel("Finish project"));
+  task.appendChild(editTools);
+  editTools.appendChild(componentEditIcon());
+  editTools.appendChild(componentTrashIcon());
   tasksCard.appendChild(componentAddTaskButton());
 }
