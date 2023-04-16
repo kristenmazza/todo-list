@@ -14,7 +14,7 @@ function componentContainer() {
 }
 
 function componentHeader() {
-  const header = document.createElement("div");
+  const header = document.createElement("header");
   header.classList.add("header");
   return header;
 }
@@ -82,6 +82,13 @@ function componentSectionHeader(heading) {
   return sectionHeader;
 }
 
+function componentProjectsHeading() {
+  const projectsHeading = document.createElement("h2");
+  projectsHeading.classList.add("projects-heading-title");
+  projectsHeading.textContent = "Projects";
+  return projectsHeading;
+}
+
 function componentProjects() {
   const projects = document.createElement("div");
   projects.classList.add("projects");
@@ -102,9 +109,9 @@ function componentProjectIcon() {
 }
 
 function componentProjectsHeader() {
-  const projectHeader = document.createElement("div");
-  projectHeader.classList.add("project-header");
-  return projectHeader;
+  const projectsHeader = document.createElement("span");
+  projectsHeader.classList.add("projects-header");
+  return projectsHeader;
 }
 
 function componentProjectTitle(title) {
@@ -204,7 +211,7 @@ export default function init() {
   filterWeek.appendChild(componentFilterName("Week"));
   sidebar.appendChild(projects);
   projects.appendChild(projectsHeader);
-  projectsHeader.appendChild(componentSectionHeader("Projects"));
+  projectsHeader.appendChild(componentProjectsHeading());
   projectsHeader.appendChild(componentAddProjectIcon());
   projects.appendChild(project);
   project.appendChild(componentProjectIcon());

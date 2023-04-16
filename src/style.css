@@ -1,5 +1,73 @@
-.hello {
-  color: red;
+html, body {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Roboto", "Calibri", "Arial";
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  padding: 0px clamp(10rem, 15%, 50vh);
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  display: inline;
+}
+
+.content {
+  display: flex;
+}
+
+.sidebar {
+  flex-basis: clamp(20ch, 15%, 50ch);
+  padding: 2rem;
+  background-color: rgb(209, 209, 209);
+  border-radius: 20px;
+}
+
+.filter,
+.project {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  padding: 0px 10px;
+  height: 2.3rem;
+}
+
+.filter:hover,
+.project:hover {
+    background-color: rgba(234, 234, 234, 0.5);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+.projects-header {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tasks-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-left: 30px;
+  padding: 2rem;
+  background-color: rgb(209, 209, 209);
+  border-radius: 20px;
 }
 
 .icons {
