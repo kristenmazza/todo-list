@@ -1,12 +1,3 @@
-import "./style.css";
+import init from "./dom-manipulation";
 
-function component() {
-  const element = document.createElement("div");
-
-  element.innerHTML = "Hello todo list!";
-  element.classList.add("hello");
-
-  return element;
-}
-
-document.body.appendChild(component());
+init();
