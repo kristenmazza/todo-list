@@ -15,8 +15,10 @@ const primaryTasks = [
 ];
 
 const primaryProject = new Project('Primary Project', primaryTasks);
+const secondaryProject = new Project('Secondary Project');
 
 addProject(primaryProject);
+addProject(secondaryProject);
 
 const taskTwo = new Task(
   'Meal planning',
