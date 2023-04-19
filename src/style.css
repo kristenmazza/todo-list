@@ -1,7 +1,8 @@
-html, body {
+html,
+body {
   margin: 0px;
   padding: 0px;
-  font-family: "Roboto", "Calibri", "Arial";
+  font-family: 'Roboto', 'Calibri', 'Arial';
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -12,10 +13,11 @@ html, body {
 .icons {
   height: 20px;
   width: auto;
-  filter: invert(100%) sepia(76%) saturate(556%) hue-rotate(153deg) brightness(90%) contrast(93%);
+  filter: invert(100%) sepia(76%) saturate(556%) hue-rotate(153deg)
+    brightness(90%) contrast(93%);
 }
 
-.edit-tools>.icons:hover,
+.edit-tools > .icons:hover,
 .plus-icon:hover {
   transform: scale(1.1);
   cursor: pointer;
@@ -61,9 +63,9 @@ h2 {
 
 .filter:hover,
 .project:hover {
-    background-color: rgba(80, 85, 92, 0.5);
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: rgba(80, 85, 92, 0.5);
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .projects-header {
@@ -107,7 +109,7 @@ h2 {
 .task-info {
   display: flex;
   align-items: center;
-  color:rgb(214, 241, 241);
+  color: rgb(214, 241, 241);
 }
 
 .edit-tools {
@@ -120,7 +122,7 @@ h2 {
   gap: 2rem;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   -webkit-appearance: none;
   appearance: none;
   margin: 0;
@@ -136,8 +138,8 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
-input[type="checkbox"]::before {
-  content: "";
+input[type='checkbox']::before {
+  content: '';
   width: 0.65em;
   height: 0.65em;
   transform: scale(0);
@@ -148,12 +150,12 @@ input[type="checkbox"]::before {
   clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
 }
 
-input[type="checkbox"]:checked::before {
+input[type='checkbox']:checked::before {
   transform: scale(1);
   background-color: rgb(193, 224, 225);
 }
 
-input[type="checkbox"]:checked + label {
+input[type='checkbox']:checked + label {
   text-decoration: line-through;
   color: rgb(193, 224, 225);
 }
@@ -161,7 +163,12 @@ input[type="checkbox"]:checked + label {
 .add-task-button {
   width: 100px;
   border: none;
-  background-image: linear-gradient(to right, rgb(0, 160, 169) 0%, rgb(0, 140, 147) 51%, rgb(83, 96, 96) 100%);
+  background-image: linear-gradient(
+    to right,
+    rgb(0, 160, 169) 0%,
+    rgb(0, 140, 147) 51%,
+    rgb(83, 96, 96) 100%
+  );
   margin: 10px;
   padding: 10px 15px;
   text-align: center;
