@@ -115,6 +115,20 @@ function componentProjectsHeader() {
   return projectsHeader;
 }
 
+function componentProjectInputForm() {
+  const projectForm = document.createElement('form');
+  const projectInputField = document.createElement('input');
+  const projectSubmit = document.createElement('input');
+  projectForm.appendChild(projectInputField);
+  projectInputField.setAttribute('name', 'project-name');
+  projectInputField.setAttribute('type', 'text');
+  projectInputField.setAttribute('autofocus', 'autofocus');
+  projectForm.appendChild(projectSubmit);
+  projectSubmit.setAttribute('type', 'submit');
+  projectSubmit.setAttribute('id', 'project-submit');
+  return projectForm;
+}
+
 function componentProjectTitle(title) {
   const projectTitle = document.createElement('p');
   projectTitle.textContent = title;
@@ -239,6 +253,8 @@ export default function init() {
   projects.appendChild(projectsHeader);
   projectsHeader.appendChild(componentProjectsHeading());
   projectsHeader.appendChild(componentAddProjectIcon());
+  projects.appendChild(componentProjectInputForm());
+  document.getElementById('project-submit').hidden = true;
   projects.appendChild(project);
   project.appendChild(componentProjectIcon());
   project.appendChild(componentProjectTitle('Primary'));

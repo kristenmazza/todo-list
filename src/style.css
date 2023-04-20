@@ -64,7 +64,7 @@ h2 {
 .filter:hover,
 .project:hover {
   background-color: rgba(80, 85, 92, 0.5);
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
@@ -76,6 +76,18 @@ h2 {
   padding-top: 2rem;
   height: 4ch;
   gap: 1rem;
+}
+
+.projects input[type='text'] {
+  border-radius: 8px;
+  background-color: rgba(80, 85, 92, 0.5);
+  outline: none;
+  border: none;
+  padding: 10px;
+  color: rgb(235, 235, 235);
+  font-size: 1rem;
+  font-family: inherit;
+  margin-top: 10px;
 }
 
 .project {
@@ -104,6 +116,7 @@ h2 {
   margin-bottom: 1rem;
   border-radius: 5px;
   gap: 1rem;
+  border-radius: 8px;
 }
 
 .task-info {
