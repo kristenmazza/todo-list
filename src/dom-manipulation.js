@@ -119,9 +119,12 @@ function componentProjectInputForm() {
   const projectForm = document.createElement('form');
   const projectInputField = document.createElement('input');
   const projectSubmit = document.createElement('input');
+  projectForm.classList.add('project-form');
+  projectForm.setAttribute('id', 'project-form');
   projectForm.appendChild(projectInputField);
   projectInputField.setAttribute('name', 'project-name');
   projectInputField.setAttribute('type', 'text');
+  projectInputField.classList.add('project-form-field');
   projectInputField.setAttribute('autofocus', 'autofocus');
   projectForm.appendChild(projectSubmit);
   projectSubmit.setAttribute('type', 'submit');
@@ -255,6 +258,7 @@ export default function init() {
   projectsHeader.appendChild(componentAddProjectIcon());
   projects.appendChild(componentProjectInputForm());
   document.getElementById('project-submit').hidden = true;
+  document.getElementById('project-form').hidden = true;
   projects.appendChild(project);
   project.appendChild(componentProjectIcon());
   project.appendChild(componentProjectTitle('Primary'));

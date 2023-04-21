@@ -43,7 +43,7 @@ h2 {
 }
 
 .sidebar {
-  flex-basis: clamp(20ch, 15%, 50ch);
+  flex-basis: clamp(24ch, 15%, 50ch);
   padding: 1rem 2rem;
   background-color: rgb(57, 62, 70);
   border-radius: 20px;
@@ -58,7 +58,6 @@ h2 {
   flex-wrap: nowrap;
   padding: 0px 10px;
   height: 2.3rem;
-  margin: 10px 0px;
 }
 
 .filter:hover,
@@ -74,6 +73,7 @@ h2 {
   align-items: center;
   justify-content: space-between;
   padding-top: 2rem;
+  padding-bottom: 10px;
   height: 4ch;
   gap: 1rem;
 }
@@ -83,11 +83,12 @@ h2 {
   background-color: rgba(80, 85, 92, 0.5);
   outline: none;
   border: none;
-  padding: 10px;
+  padding: 8px;
   color: rgb(235, 235, 235);
   font-size: 1rem;
   font-family: inherit;
-  margin-top: 10px;
+  margin: 10px 10px 10px 0px;
+  width: calc(100% - 15px);
 }
 
 .project {
