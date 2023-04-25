@@ -123,6 +123,7 @@ function componentProjectInputForm() {
   projectForm.setAttribute('id', 'project-form');
   projectForm.appendChild(projectInputField);
   projectInputField.setAttribute('name', 'project-name');
+  projectInputField.setAttribute('id', 'project-name');
   projectInputField.setAttribute('type', 'text');
   projectInputField.classList.add('project-form-field');
   projectInputField.setAttribute('autofocus', 'autofocus');
@@ -217,7 +218,7 @@ function componentAddTaskButton() {
   return addTaskButton;
 }
 
-export default function init() {
+export function init() {
   const container = componentContainer();
   const header = componentHeader();
   const content = componentContent();
@@ -274,4 +275,15 @@ export default function init() {
   editTools.appendChild(componentEditIcon());
   editTools.appendChild(componentTrashIcon());
   tasksCard.appendChild(componentAddTaskButton());
+}
+
+export function addProjectToDOM(projectName) {
+  const projects = document.querySelector('.projects');
+  const project = componentProject();
+  const projectTitle = componentProjectTitle(projectName);
+  projects.insertBefore(project, projects.children[2]);
+  project.appendChild(componentProjectIcon());
+  project.appendChild(projectTitle);
+
+  return projects;
 }

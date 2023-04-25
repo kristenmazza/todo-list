@@ -1,4 +1,4 @@
-import init from './dom-manipulation';
+import { init } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
 import { getProjects, addProject } from './site-storage';
