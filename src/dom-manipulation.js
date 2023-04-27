@@ -277,13 +277,31 @@ export function init() {
   tasksCard.appendChild(componentAddTaskButton());
 }
 
-export function addProjectToDOM(projectName) {
+export function getProjectForm() {
+  return document.querySelector('.project-form');
+}
+
+export function addProjectToDOM(newProject) {
   const projects = document.querySelector('.projects');
   const project = componentProject();
-  const projectTitle = componentProjectTitle(projectName);
+  const projectTitle = componentProjectTitle(newProject);
   projects.insertBefore(project, projects.children[2]);
   project.appendChild(componentProjectIcon());
   project.appendChild(projectTitle);
 
+  getProjectForm().reset();
+
   return projects;
+}
+
+// If project form is hidden is true, then that means project form
+// is collapsed. This function would then return false,
+// because it is false that the project form is expanded.
+export function projectFormExpanded() {
+  return !getProjectForm().hidden;
+}
+
+// Expand or collapse the project form based on passed in true/false value
+export function expandCreateProjectForm(expand) {
+  getProjectForm().hidden = !expand;
 }
