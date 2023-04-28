@@ -4,6 +4,7 @@ import {
   getProjectForm,
   projectFormExpanded,
   expandCreateProjectForm,
+  rotateAddProjectIcon,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -63,4 +64,7 @@ const showProjectForm = document.querySelector('.plus-icon');
 showProjectForm.addEventListener('click', () => {
   // Expand or collapse project form based on current state when pressing the plus icon image
   expandCreateProjectForm(!projectFormExpanded());
+
+  // Rotate between + and X add project icon when clicked
+  rotateAddProjectIcon();
 });

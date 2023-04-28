@@ -305,3 +305,13 @@ export function projectFormExpanded() {
 export function expandCreateProjectForm(expand) {
   getProjectForm().hidden = !expand;
 }
+
+// Rotate add project icon when called
+export function rotateAddProjectIcon() {
+  const addProjectIcon = document.querySelector('.plus-icon');
+  if (!addProjectIcon.classList.contains('rotate')) {
+    addProjectIcon.classList.add('rotate');
+  } else if (addProjectIcon.classList.contains('rotate')) {
+    addProjectIcon.classList.remove('rotate');
+  }
+}

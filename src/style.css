@@ -17,10 +17,27 @@ body {
     brightness(90%) contrast(93%);
 }
 
-.edit-tools > .icons:hover,
+.plus-icon {
+  transition: all 0.3s;
+}
+
 .plus-icon:hover {
-  transform: scale(1.1);
   cursor: pointer;
+  height: 23px;
+  width: auto;
+}
+
+.edit-tools > .icons:hover {
+  transform: scale(1.15);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.rotate {
+  transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
 }
 
 .container {
