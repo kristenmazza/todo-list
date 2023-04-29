@@ -46,6 +46,7 @@ function componentFilters() {
 function componentFilter() {
   const filter = document.createElement('div');
   filter.classList.add('filter');
+  filter.classList.add('sidebar-links');
   return filter;
 }
 
@@ -99,6 +100,7 @@ function componentProjects() {
 function componentProject() {
   const project = document.createElement('div');
   project.classList.add('project');
+  project.classList.add('sidebar-links');
   return project;
 }
 
@@ -314,4 +316,11 @@ export function rotateAddProjectIcon() {
   } else if (addProjectIcon.classList.contains('rotate')) {
     addProjectIcon.classList.remove('rotate');
   }
+}
+
+export function removeActiveClass() {
+  const sidebarLinks = document.querySelectorAll('.sidebar-links');
+  sidebarLinks.forEach((sidebarLink) => {
+    sidebarLink.classList.remove('active');
+  });
 }

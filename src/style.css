@@ -84,6 +84,11 @@ h2 {
   cursor: pointer;
 }
 
+.active {
+  background-color: rgba(80, 85, 92, 0.5);
+  border-radius: 8px;
+}
+
 .projects-header {
   display: flex;
   flex-wrap: nowrap;

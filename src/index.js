@@ -5,6 +5,7 @@ import {
   projectFormExpanded,
   expandCreateProjectForm,
   rotateAddProjectIcon,
+  removeActiveClass,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -67,4 +68,15 @@ showProjectForm.addEventListener('click', () => {
 
   // Rotate between + and X add project icon when clicked
   rotateAddProjectIcon();
+});
+
+const sidebarLinks = document.querySelectorAll('.sidebar-links');
+sidebarLinks.forEach((sidebarLink) => {
+  sidebarLink.addEventListener('click', () => {
+    // Remove active class from sidebar 'links'
+    removeActiveClass();
+
+    // Add active class to clicked sidebar 'link'
+    sidebarLink.classList.toggle('active');
+  });
 });
