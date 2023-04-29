@@ -81,16 +81,17 @@ showProjectForm.addEventListener('click', () => {
 
 const sidebar = document.querySelector('#sidebar');
 sidebar.addEventListener('click', (e) => {
-  // Remove active class from any previously active element in sidebar
-  removeActiveClass();
-
-  // Make current target active (with background color) if it is a sidebar link
+  // If clicking sidebar-link div, remove any existing active class and add it to clicked div.
+  // Else if clicking elements within sidebar-link div, add active class to parent (sidebar-link div)
+  // after removing any existing active class
   if (e.target.classList.contains('sidebar-links')) {
+    removeActiveClass();
     e.target.classList.toggle('active');
   } else if (
     e.target.classList.contains('filter-elements') ||
     e.target.classList.contains('project-elements')
   ) {
+    removeActiveClass();
     e.target.parentNode.classList.toggle('active');
   }
 });
