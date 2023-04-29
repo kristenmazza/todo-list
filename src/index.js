@@ -87,5 +87,10 @@ sidebar.addEventListener('click', (e) => {
   // Make current target active (with background color) if it is a sidebar link
   if (e.target.classList.contains('sidebar-links')) {
     e.target.classList.toggle('active');
+  } else if (
+    e.target.classList.contains('filter-elements') ||
+    e.target.classList.contains('project-elements')
+  ) {
+    e.target.parentNode.classList.toggle('active');
   }
 });

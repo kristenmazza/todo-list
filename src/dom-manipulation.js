@@ -55,6 +55,7 @@ function componentInboxIcon() {
   const inboxIcon = new Image();
   inboxIcon.src = InboxIcon;
   inboxIcon.classList.add('icons');
+  inboxIcon.classList.add('filter-elements');
   return inboxIcon;
 }
 
@@ -62,6 +63,7 @@ function componentTodayIcon() {
   const todayIcon = new Image();
   todayIcon.src = CalendarDayIcon;
   todayIcon.classList.add('icons');
+  todayIcon.classList.add('filter-elements');
   return todayIcon;
 }
 
@@ -69,12 +71,14 @@ function componentWeekIcon() {
   const weekIcon = new Image();
   weekIcon.src = CalendarWeekIcon;
   weekIcon.classList.add('icons');
+  weekIcon.classList.add('filter-elements');
   return weekIcon;
 }
 
 function componentFilterName(name) {
   const filterName = document.createElement('p');
   filterName.textContent = name;
+  filterName.classList.add('filter-elements');
   return filterName;
 }
 
@@ -109,6 +113,7 @@ function componentProjectIcon() {
   const projectIcon = new Image();
   projectIcon.src = FolderIcon;
   projectIcon.classList.add('icons');
+  projectIcon.classList.add('project-elements');
   return projectIcon;
 }
 
@@ -139,6 +144,7 @@ function componentProjectInputForm() {
 function componentProjectTitle(title) {
   const projectTitle = document.createElement('p');
   projectTitle.textContent = title;
+  projectTitle.classList.add('project-elements');
   return projectTitle;
 }
 
