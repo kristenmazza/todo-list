@@ -64,6 +64,9 @@ projectForm.addEventListener('keypress', (e) => {
 
     // Make current project active
     document.querySelector('.project').classList.add('active');
+
+    // Change x to + for add-project icon
+    rotateAddProjectIcon();
   }
 });
 
@@ -72,7 +75,7 @@ showProjectForm.addEventListener('click', () => {
   // Expand or collapse project form based on current state when pressing the plus icon image
   expandCreateProjectForm(!projectFormExpanded());
 
-  // Rotate between + and X add project icon when clicked
+  // Rotate between + and x for add-project icon when clicked
   rotateAddProjectIcon();
 });
 
