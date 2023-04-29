@@ -58,6 +58,12 @@ projectForm.addEventListener('keypress', (e) => {
 
     // Add project name to sidebar
     addProjectToDOM(newProject.getTitle());
+
+    // Remove active class (background color) from any active element
+    removeActiveClass();
+
+    // Make current project active
+    document.querySelector('.project').classList.add('active');
   }
 });
 
@@ -70,13 +76,13 @@ showProjectForm.addEventListener('click', () => {
   rotateAddProjectIcon();
 });
 
-const sidebarLinks = document.querySelectorAll('.sidebar-links');
-sidebarLinks.forEach((sidebarLink) => {
-  sidebarLink.addEventListener('click', () => {
-    // Remove active class from sidebar 'links'
-    removeActiveClass();
+const sidebar = document.querySelector('#sidebar');
+sidebar.addEventListener('click', (e) => {
+  // Remove active class from any previously active element in sidebar
+  removeActiveClass();
 
-    // Add active class to clicked sidebar 'link'
-    sidebarLink.classList.toggle('active');
-  });
+  // Make current target active (with background color) if it is a sidebar link
+  if (e.target.classList.contains('sidebar-links')) {
+    e.target.classList.toggle('active');
+  }
 });

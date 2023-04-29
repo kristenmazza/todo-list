@@ -34,6 +34,7 @@ function componentContent() {
 function componentSidebar() {
   const sidebar = document.createElement('div');
   sidebar.classList.add('sidebar');
+  sidebar.setAttribute('id', 'sidebar');
   return sidebar;
 }
 
@@ -318,6 +319,7 @@ export function rotateAddProjectIcon() {
   }
 }
 
+// Remove active class from any previously active element in sidebar
 export function removeActiveClass() {
   const sidebarLinks = document.querySelectorAll('.sidebar-links');
   sidebarLinks.forEach((sidebarLink) => {

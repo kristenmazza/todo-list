@@ -74,13 +74,12 @@ h2 {
   gap: 0.5rem;
   flex-wrap: nowrap;
   padding: 0px 10px;
+  margin: 5px 0px;
   height: 2.3rem;
 }
 
 .filter:hover,
 .project:hover {
-  background-color: rgba(80, 85, 92, 0.5);
-  border-radius: 8px;
   cursor: pointer;
 }
 
