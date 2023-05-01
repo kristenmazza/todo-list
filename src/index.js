@@ -6,6 +6,7 @@ import {
   expandCreateProjectForm,
   rotateAddProjectIcon,
   removeActiveClass,
+  componentTaskInputForm,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -94,4 +95,10 @@ sidebar.addEventListener('click', (e) => {
     removeActiveClass();
     e.target.parentNode.classList.toggle('active');
   }
+});
+
+const addTaskButton = document.querySelector('.add-task-button');
+const tasksContainer = document.querySelector('.tasks-card');
+addTaskButton.addEventListener('click', () => {
+  tasksContainer.replaceChildren(componentTaskInputForm());
 });

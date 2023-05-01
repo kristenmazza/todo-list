@@ -222,3 +222,8 @@ input[type='checkbox']:checked + label {
   color: #fff;
   text-decoration: none;
 }
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+}

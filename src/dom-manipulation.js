@@ -6,6 +6,7 @@ import FolderIcon from './images/folder-solid.svg';
 import EditIcon from './images/pen-to-square-solid.svg';
 import TrashIcon from './images/trash-solid.svg';
 import PlusIcon from './images/plus-solid.svg';
+import StarRegular from './images/star-regular.svg';
 
 function componentContainer() {
   const container = document.createElement('div');
@@ -225,6 +226,60 @@ function componentAddTaskButton() {
   addTaskButton.classList.add('add-task-button');
   addTaskButton.textContent = 'Add Task';
   return addTaskButton;
+}
+
+export function componentTaskInputForm() {
+  const taskForm = document.createElement('form');
+  const taskNameField = document.createElement('input');
+  const taskNameLabel = document.createElement('label');
+  const taskDescriptionField = document.createElement('input');
+  const taskDescriptionLabel = document.createElement('label');
+  const taskSubmit = document.createElement('input');
+  const inputGroup = document.createElement('div');
+  const taskDueDateField = document.createElement('input');
+  const taskDueDateLabel = document.createElement('label');
+
+  taskForm.classList.add('task-form');
+  taskForm.setAttribute('id', 'task-form');
+
+  taskForm.appendChild(taskNameLabel);
+  taskForm.appendChild(taskNameField);
+  taskNameLabel.setAttribute('for', 'task-name');
+  taskNameLabel.textContent = 'Add Task';
+  taskNameField.setAttribute('name', 'task-name');
+  taskNameField.setAttribute('id', 'task-name');
+  taskNameField.setAttribute('type', 'text');
+  taskNameField.classList.add('task-name-field');
+
+  taskForm.appendChild(taskDescriptionLabel);
+  taskForm.appendChild(taskDescriptionField);
+  taskDescriptionLabel.setAttribute('for', 'task-description');
+  taskDescriptionLabel.textContent = 'Description';
+  taskDescriptionField.setAttribute('name', 'task-description');
+  taskDescriptionField.setAttribute('id', 'task-description');
+  taskDescriptionField.setAttribute('type', 'text');
+  taskDescriptionField.classList.add('task-description-field');
+
+  taskForm.appendChild(inputGroup);
+  inputGroup.appendChild(taskDueDateLabel);
+  inputGroup.appendChild(taskDueDateField);
+  taskDueDateLabel.setAttribute('for', 'due-date');
+  taskDueDateLabel.textContent = 'Due Date';
+  taskDueDateField.setAttribute('name', 'due-date');
+  taskDueDateField.setAttribute('id', 'due-date');
+  taskDueDateField.setAttribute('type', 'date');
+  taskDueDateField.classList.add('due-date-field');
+
+  const starOutline = new Image();
+  starOutline.src = StarRegular;
+  starOutline.classList.add('icons', 'star-outline');
+  inputGroup.appendChild(starOutline);
+
+  taskForm.appendChild(taskSubmit);
+  taskSubmit.setAttribute('type', 'submit');
+  taskSubmit.setAttribute('id', 'task-submit');
+  taskSubmit.setAttribute('value', 'ADD');
+  return taskForm;
 }
 
 export function init() {
