@@ -7,6 +7,7 @@ import EditIcon from './images/pen-to-square-solid.svg';
 import TrashIcon from './images/trash-solid.svg';
 import PlusIcon from './images/plus-solid.svg';
 import StarRegular from './images/star-regular.svg';
+import LeftSolid from './images/chevron-left-solid.svg';
 
 function componentContainer() {
   const container = document.createElement('div');
@@ -238,6 +239,7 @@ export function componentTaskInputForm() {
   const inputGroup = document.createElement('div');
   const taskDueDateField = document.createElement('input');
   const taskDueDateLabel = document.createElement('label');
+  const navigationGroup = document.createElement('div');
 
   taskForm.classList.add('task-form');
   taskForm.setAttribute('id', 'task-form');
@@ -275,7 +277,13 @@ export function componentTaskInputForm() {
   starOutline.classList.add('icons', 'star-outline');
   inputGroup.appendChild(starOutline);
 
-  taskForm.appendChild(taskSubmit);
+  const backIcon = new Image();
+  backIcon.src = LeftSolid;
+  backIcon.classList.add('icons', 'back-icon');
+
+  taskForm.appendChild(navigationGroup);
+  navigationGroup.appendChild(backIcon);
+  navigationGroup.appendChild(taskSubmit);
   taskSubmit.setAttribute('type', 'submit');
   taskSubmit.setAttribute('id', 'task-submit');
   taskSubmit.setAttribute('value', 'ADD');
