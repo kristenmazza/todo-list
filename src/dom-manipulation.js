@@ -387,3 +387,17 @@ export function removeActiveClass() {
     sidebarLink.classList.remove('active');
   });
 }
+
+// Highlight currently selected sidebar option and remove any inactive highlighted options
+export function toggleSidebarHighlight(element) {
+  if (element.classList.contains('sidebar-links')) {
+    removeActiveClass();
+    element.classList.toggle('active');
+  } else if (
+    element.classList.contains('filter-elements') ||
+    element.classList.contains('project-elements')
+  ) {
+    removeActiveClass();
+    element.parentNode.classList.toggle('active');
+  }
+}
