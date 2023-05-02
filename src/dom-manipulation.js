@@ -33,6 +33,7 @@ function componentContent() {
   return content;
 }
 
+// Sidebar
 function componentSidebar() {
   const sidebar = document.createElement('div');
   sidebar.classList.add('sidebar');
@@ -40,6 +41,7 @@ function componentSidebar() {
   return sidebar;
 }
 
+// Sidebar filters section
 function componentFilters() {
   const filters = document.createElement('div');
   filters.classList.add('filters');
@@ -91,9 +93,10 @@ function componentSectionHeader(heading) {
   return sectionHeader;
 }
 
+// Sidebar projects section
 function componentProjectsHeading() {
   const projectsHeading = document.createElement('h2');
-  projectsHeading.classList.add('projects-heading-title');
+  projectsHeading.classList.add('section-header');
   projectsHeading.textContent = 'Projects';
   return projectsHeading;
 }
@@ -125,6 +128,7 @@ function componentProjectsHeader() {
   return projectsHeader;
 }
 
+// Project creation form
 function componentProjectInputForm() {
   const projectForm = document.createElement('form');
   const projectInputField = document.createElement('input');
@@ -157,6 +161,7 @@ function componentAddProjectIcon() {
   return addProjectIcon;
 }
 
+// Task page section
 function componentTasksCard() {
   const tasksCard = document.createElement('div');
   tasksCard.classList.add('tasks-card');
@@ -229,41 +234,72 @@ function componentAddTaskButton() {
   return addTaskButton;
 }
 
+// Add-task form
+function componentTaskFormGroup() {
+  const formGroup = document.createElement('div');
+  formGroup.classList.add('task-form-group');
+  return formGroup;
+}
+
+function componentTaskItemGroup() {
+  const itemGroup = document.createElement('div');
+  itemGroup.classList.add('task-item-group');
+  return itemGroup;
+}
+
+function componentInputGroup() {
+  const inputGroup = document.createElement('div');
+  inputGroup.classList.add('input-group');
+  return inputGroup;
+}
+
+function componentNavigationGroup() {
+  const navGroup = document.createElement('div');
+  navGroup.classList.add('nav-group');
+  return navGroup;
+}
+
 export function componentTaskInputForm() {
   const taskForm = document.createElement('form');
   const taskNameField = document.createElement('input');
-  const taskNameLabel = document.createElement('label');
-  const taskDescriptionField = document.createElement('input');
+  const taskDescriptionField = document.createElement('textarea');
   const taskDescriptionLabel = document.createElement('label');
+  taskDescriptionLabel.classList.add('form-label');
   const taskSubmit = document.createElement('input');
-  const inputGroup = document.createElement('div');
+  const taskFormGroup = componentTaskFormGroup();
+  const taskNameGroup = componentTaskItemGroup();
+  const descriptionGroup = componentTaskItemGroup();
+  const dueDateGroup = componentTaskItemGroup();
+  const inputGroup = componentInputGroup();
+  const navigationGroup = componentNavigationGroup();
   const taskDueDateField = document.createElement('input');
   const taskDueDateLabel = document.createElement('label');
-  const navigationGroup = document.createElement('div');
+  taskDueDateLabel.classList.add('form-label');
 
   taskForm.classList.add('task-form');
   taskForm.setAttribute('id', 'task-form');
 
-  taskForm.appendChild(taskNameLabel);
-  taskForm.appendChild(taskNameField);
-  taskNameLabel.setAttribute('for', 'task-name');
-  taskNameLabel.textContent = 'Add Task';
+  taskForm.appendChild(taskFormGroup);
+  taskFormGroup.appendChild(taskNameGroup);
+  taskNameGroup.appendChild(componentSectionHeader('Add Task'));
+  taskNameGroup.appendChild(taskNameField);
   taskNameField.setAttribute('name', 'task-name');
   taskNameField.setAttribute('id', 'task-name');
   taskNameField.setAttribute('type', 'text');
   taskNameField.classList.add('task-name-field');
 
-  taskForm.appendChild(taskDescriptionLabel);
-  taskForm.appendChild(taskDescriptionField);
+  taskFormGroup.appendChild(descriptionGroup);
+  descriptionGroup.appendChild(taskDescriptionLabel);
+  descriptionGroup.appendChild(taskDescriptionField);
   taskDescriptionLabel.setAttribute('for', 'task-description');
   taskDescriptionLabel.textContent = 'Description';
   taskDescriptionField.setAttribute('name', 'task-description');
   taskDescriptionField.setAttribute('id', 'task-description');
-  taskDescriptionField.setAttribute('type', 'text');
   taskDescriptionField.classList.add('task-description-field');
 
-  taskForm.appendChild(inputGroup);
-  inputGroup.appendChild(taskDueDateLabel);
+  taskFormGroup.appendChild(dueDateGroup);
+  dueDateGroup.appendChild(taskDueDateLabel);
+  taskFormGroup.appendChild(inputGroup);
   inputGroup.appendChild(taskDueDateField);
   taskDueDateLabel.setAttribute('for', 'due-date');
   taskDueDateLabel.textContent = 'Due Date';
@@ -290,6 +326,7 @@ export function componentTaskInputForm() {
   return taskForm;
 }
 
+// Initialize page
 export function init() {
   const container = componentContainer();
   const header = componentHeader();
@@ -349,10 +386,12 @@ export function init() {
   tasksCard.appendChild(componentAddTaskButton());
 }
 
+// Get project form
 export function getProjectForm() {
   return document.querySelector('.project-form');
 }
 
+// Add project to page
 export function addProjectToDOM(newProject) {
   const projects = document.querySelector('.projects');
   const project = componentProject();

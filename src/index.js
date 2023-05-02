@@ -87,6 +87,7 @@ sidebar.addEventListener('click', (e) => {
   toggleSidebarHighlight(e.target);
 });
 
+// Show task input form when 'Add Task' button is clicked
 const addTaskButton = document.querySelector('.add-task-button');
 const tasksContainer = document.querySelector('.tasks-card');
 addTaskButton.addEventListener('click', () => {
