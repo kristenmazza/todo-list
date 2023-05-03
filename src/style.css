@@ -27,7 +27,9 @@ body {
   width: auto;
 }
 
-.edit-tools > .icons:hover {
+.edit-tools > .icons:hover,
+.nav-group > .icons:hover,
+.input-group > .icons:hover {
   transform: scale(1.15);
   transition: all 0.3s;
   cursor: pointer;
@@ -203,8 +205,9 @@ input[type='checkbox']:checked + label {
   color: rgb(193, 224, 225);
 }
 
-.add-task-button {
-  width: 100px;
+.add-task-button,
+#task-submit {
+  width: 130px;
   border: none;
   background-image: linear-gradient(
     to right,
@@ -214,6 +217,8 @@ input[type='checkbox']:checked + label {
   );
   margin: 10px;
   padding: 10px 15px;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
   text-align: center;
   text-transform: uppercase;
   transition: 0.5s;
@@ -225,9 +230,9 @@ input[type='checkbox']:checked + label {
   align-self: flex-end;
 }
 
-.add-task-button:hover {
-  transform: scale(1.1);
-  color: #fff;
+.add-task-button:hover,
+#task-submit:hover {
+  transform: scale(1.05);
   text-decoration: none;
 }
 
