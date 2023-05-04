@@ -20,7 +20,7 @@ const primaryTasks = [
     'Respond to emails',
     'Catch up on personal and work emails',
     '3/4/2023',
-    'low'
+    1
   ),
 ];
 
@@ -34,7 +34,7 @@ const taskTwo = new Task(
   'Meal planning',
   'Plan meals for next week',
   '3/4/2023',
-  3
+  2
 );
 
 primaryProject.addTask(taskTwo);

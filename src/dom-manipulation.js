@@ -8,6 +8,8 @@ import TrashIcon from './images/trash-solid.svg';
 import PlusIcon from './images/plus-solid.svg';
 import StarRegular from './images/star-regular.svg';
 import LeftSolid from './images/chevron-left-solid.svg';
+import Task from './task';
+import Project from './project';
 
 function componentContainer() {
   const container = document.createElement('div');
@@ -259,6 +261,17 @@ function componentNavigationGroup() {
   return navGroup;
 }
 
+// Get task information from add-task form
+function getTaskInformation() {
+  const taskTitle = document.getElementById('task-name').value;
+  const taskDescription = document.getElementById('task-description').value;
+  const taskDate = document.getElementById('due-date').value;
+  // const taskPriority = document.getElementById('task-priority').value;
+
+  const task = new Task(taskTitle, taskDescription, taskDate);
+  console.log(task);
+}
+
 export function componentTaskInputForm() {
   const taskForm = document.createElement('form');
   const taskNameField = document.createElement('input');
@@ -323,6 +336,13 @@ export function componentTaskInputForm() {
   taskSubmit.setAttribute('type', 'submit');
   taskSubmit.setAttribute('id', 'task-submit');
   taskSubmit.setAttribute('value', 'ADD');
+
+  // Event listener for task form
+  taskForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    getTaskInformation();
+  });
+
   return taskForm;
 }
 
