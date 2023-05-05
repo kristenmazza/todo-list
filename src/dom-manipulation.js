@@ -6,10 +6,8 @@ import FolderIcon from './images/folder-solid.svg';
 import EditIcon from './images/pen-to-square-solid.svg';
 import TrashIcon from './images/trash-solid.svg';
 import PlusIcon from './images/plus-solid.svg';
-import StarRegular from './images/star-regular.svg';
 import LeftSolid from './images/chevron-left-solid.svg';
 import Task from './task';
-import Project from './project';
 
 function componentContainer() {
   const container = document.createElement('div');
@@ -261,12 +259,34 @@ function componentNavigationGroup() {
   return navGroup;
 }
 
+function componentTaskPriority() {
+  const priority = document.createElement('select');
+  priority.setAttribute('id', 'priority');
+  priority.setAttribute('name', 'priority');
+  const OptionOne = document.createElement('option');
+  const OptionTwo = document.createElement('option');
+  OptionOne.value = 'low';
+  OptionOne.textContent = 'Low';
+  OptionTwo.value = 'high';
+  OptionTwo.textContent = 'High';
+  priority.appendChild(OptionOne);
+  priority.appendChild(OptionTwo);
+  return priority;
+}
+
+function componentTaskPriorityLabel() {
+  const priorityLabel = document.createElement('label');
+  priorityLabel.setAttribute('for', 'priority');
+  priorityLabel.textContent = 'Priority';
+  priorityLabel.classList.add('form-label');
+  return priorityLabel;
+}
+
 // Get task information from add-task form
 function getTaskInformation() {
   const taskTitle = document.getElementById('task-name').value;
   const taskDescription = document.getElementById('task-description').value;
   const taskDate = document.getElementById('due-date').value;
-  // const taskPriority = document.getElementById('task-priority').value;
 
   const task = new Task(taskTitle, taskDescription, taskDate);
   console.log(task);
@@ -282,8 +302,9 @@ export function componentTaskInputForm() {
   const taskFormGroup = componentTaskFormGroup();
   const taskNameGroup = componentTaskItemGroup();
   const descriptionGroup = componentTaskItemGroup();
-  const dueDateGroup = componentTaskItemGroup();
   const inputGroup = componentInputGroup();
+  const taskDueDateGroup = componentTaskItemGroup();
+  const taskPriorityGroup = componentTaskItemGroup();
   const navigationGroup = componentNavigationGroup();
   const taskDueDateField = document.createElement('input');
   const taskDueDateLabel = document.createElement('label');
@@ -310,10 +331,7 @@ export function componentTaskInputForm() {
   taskDescriptionField.setAttribute('id', 'task-description');
   taskDescriptionField.classList.add('task-description-field');
 
-  taskFormGroup.appendChild(dueDateGroup);
-  dueDateGroup.appendChild(taskDueDateLabel);
   taskFormGroup.appendChild(inputGroup);
-  inputGroup.appendChild(taskDueDateField);
   taskDueDateLabel.setAttribute('for', 'due-date');
   taskDueDateLabel.textContent = 'Due Date';
   taskDueDateField.setAttribute('name', 'due-date');
@@ -321,10 +339,12 @@ export function componentTaskInputForm() {
   taskDueDateField.setAttribute('type', 'date');
   taskDueDateField.classList.add('due-date-field');
 
-  const starOutline = new Image();
-  starOutline.src = StarRegular;
-  starOutline.classList.add('icons', 'star-outline');
-  inputGroup.appendChild(starOutline);
+  inputGroup.appendChild(taskDueDateGroup);
+  taskDueDateGroup.appendChild(taskDueDateLabel);
+  taskDueDateGroup.appendChild(taskDueDateField);
+  inputGroup.appendChild(taskPriorityGroup);
+  taskPriorityGroup.appendChild(componentTaskPriorityLabel());
+  taskPriorityGroup.appendChild(componentTaskPriority());
 
   const backIcon = new Image();
   backIcon.src = LeftSolid;

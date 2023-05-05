@@ -49,6 +49,7 @@ body {
 h1 {
   font-size: 4rem;
   background: -webkit-linear-gradient(rgb(193, 224, 221), rgb(0, 173, 181));
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -251,6 +252,7 @@ input[type='checkbox']:checked + label {
 .task-item-group {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .input-group,
@@ -258,16 +260,11 @@ input[type='checkbox']:checked + label {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10%;
-  padding-right: 3px;
-}
-
-.due-date-field {
-  width: 100%;
 }
 
 .task-item-group input[type='text'],
 input[type='date'],
+select,
 textarea {
   border-radius: 8px;
   background-color: rgba(80, 85, 92, 0.5);
