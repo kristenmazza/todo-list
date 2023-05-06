@@ -128,7 +128,7 @@ function componentProjectsHeader() {
   return projectsHeader;
 }
 
-// Project creation form
+// Sidebar project creation form
 function componentProjectInputForm() {
   const projectForm = document.createElement('form');
   const projectInputField = document.createElement('input');
@@ -147,6 +147,7 @@ function componentProjectInputForm() {
   return projectForm;
 }
 
+// Sidebar project title
 function componentProjectTitle(title) {
   const projectTitle = document.createElement('p');
   projectTitle.textContent = title;
@@ -154,6 +155,7 @@ function componentProjectTitle(title) {
   return projectTitle;
 }
 
+// Sidebar add project icon
 function componentAddProjectIcon() {
   const addProjectIcon = new Image();
   addProjectIcon.src = PlusIcon;
@@ -161,7 +163,7 @@ function componentAddProjectIcon() {
   return addProjectIcon;
 }
 
-// Task page section
+// Tasks section
 function componentTasksCard() {
   const tasksCard = document.createElement('div');
   tasksCard.classList.add('tasks-card');
@@ -234,31 +236,35 @@ function componentAddTaskButton() {
   return addTaskButton;
 }
 
-// Add-task form
+// Add Task form
 function componentTaskFormGroup() {
   const formGroup = document.createElement('div');
   formGroup.classList.add('task-form-group');
   return formGroup;
 }
 
+// Add Task form component for each input item (task, description, date, priority)
 function componentTaskItemGroup() {
   const itemGroup = document.createElement('div');
   itemGroup.classList.add('task-item-group');
   return itemGroup;
 }
 
+// Add Task form component for multiple input items row (date, priority)
 function componentInputGroup() {
   const inputGroup = document.createElement('div');
   inputGroup.classList.add('input-group');
   return inputGroup;
 }
 
+// Add Task form component for navigation (back & submit buttons)
 function componentNavigationGroup() {
   const navGroup = document.createElement('div');
   navGroup.classList.add('nav-group');
   return navGroup;
 }
 
+// Add Task form priority selection
 function componentTaskPriority() {
   const priority = document.createElement('select');
   priority.setAttribute('id', 'priority');
@@ -274,6 +280,7 @@ function componentTaskPriority() {
   return priority;
 }
 
+// Add Task form priority label
 function componentTaskPriorityLabel() {
   const priorityLabel = document.createElement('label');
   priorityLabel.setAttribute('for', 'priority');
@@ -282,23 +289,106 @@ function componentTaskPriorityLabel() {
   return priorityLabel;
 }
 
-// Get task information from add-task form
+// Add Task form task name header and input
+function componentFormTaskName() {
+  const taskNameGroup = componentTaskItemGroup();
+  const taskNameField = document.createElement('input');
+  taskNameGroup.appendChild(componentSectionHeader('Add Task'));
+  taskNameGroup.appendChild(taskNameField);
+  taskNameField.setAttribute('name', 'task-name');
+  taskNameField.setAttribute('id', 'task-name');
+  taskNameField.setAttribute('type', 'text');
+  taskNameField.classList.add('task-name-field');
+  return taskNameGroup;
+}
+
+// Add Task form description input field
+function componentFormTaskDescription() {
+  const taskDescriptionField = document.createElement('textarea');
+  taskDescriptionField.setAttribute('name', 'task-description');
+  taskDescriptionField.setAttribute('id', 'task-description');
+  taskDescriptionField.classList.add('task-description-field');
+  return taskDescriptionField;
+}
+
+// Add Task form description label
+function componentFormTaskDescriptionLabel() {
+  const taskDescriptionLabel = document.createElement('label');
+  taskDescriptionLabel.classList.add('form-label');
+  taskDescriptionLabel.setAttribute('for', 'task-description');
+  taskDescriptionLabel.textContent = 'Description';
+  return taskDescriptionLabel;
+}
+
+// Add Task form due date input
+function componentFormTaskDueDate() {
+  const taskDueDateField = document.createElement('input');
+  taskDueDateField.setAttribute('name', 'due-date');
+  taskDueDateField.setAttribute('id', 'due-date');
+  taskDueDateField.setAttribute('type', 'date');
+  taskDueDateField.classList.add('due-date-field');
+  return taskDueDateField;
+}
+
+// Add Task form due date label
+function componentFormTaskDueDateLabel() {
+  const taskDueDateLabel = document.createElement('label');
+  taskDueDateLabel.classList.add('form-label');
+  taskDueDateLabel.setAttribute('for', 'due-date');
+  taskDueDateLabel.textContent = 'Due Date';
+  return taskDueDateLabel;
+}
+
+// Add Task form submit button
+function componentFormTaskSubmit() {
+  const taskSubmit = document.createElement('input');
+  taskSubmit.setAttribute('type', 'submit');
+  taskSubmit.setAttribute('id', 'task-submit');
+  taskSubmit.setAttribute('value', 'ADD');
+  return taskSubmit;
+}
+
+// Add Task form back button
+function componentFormTaskBackButton() {
+  const backIcon = new Image();
+  backIcon.src = LeftSolid;
+  backIcon.classList.add('icons', 'back-icon');
+  return backIcon;
+}
+
+// Display task
+function displayTask(taskName) {
+  const tasks = document.querySelector('tasks');
+  const task = componentTask();
+  const taskInfo = componentTaskInfo();
+  const checkbox = componentCheckbox();
+  const editTools = componentEditTools();
+
+  tasks.appendChild(task);
+  task.appendChild(taskInfo);
+  taskInfo.appendChild(checkbox);
+  checkbox.appendChild(componentCheckboxField());
+  checkbox.appendChild(componentCheckboxLabel(taskName));
+  task.appendChild(editTools);
+  editTools.appendChild(componentEditIcon());
+  editTools.appendChild(componentTrashIcon());
+}
+
+// Get task information from Add Task form
 function getTaskInformation() {
   const taskTitle = document.getElementById('task-name').value;
   const taskDescription = document.getElementById('task-description').value;
   const taskDate = document.getElementById('due-date').value;
+  const taskPriority = document.getElementById('priority').value;
 
-  const task = new Task(taskTitle, taskDescription, taskDate);
+  const task = new Task(taskTitle, taskDescription, taskDate, taskPriority);
+  displayTask(task.title);
   console.log(task);
 }
 
+// Full Add Task input form
 export function componentTaskInputForm() {
   const taskForm = document.createElement('form');
-  const taskNameField = document.createElement('input');
-  const taskDescriptionField = document.createElement('textarea');
-  const taskDescriptionLabel = document.createElement('label');
-  taskDescriptionLabel.classList.add('form-label');
-  const taskSubmit = document.createElement('input');
   const taskFormGroup = componentTaskFormGroup();
   const taskNameGroup = componentTaskItemGroup();
   const descriptionGroup = componentTaskItemGroup();
@@ -306,56 +396,35 @@ export function componentTaskInputForm() {
   const taskDueDateGroup = componentTaskItemGroup();
   const taskPriorityGroup = componentTaskItemGroup();
   const navigationGroup = componentNavigationGroup();
-  const taskDueDateField = document.createElement('input');
-  const taskDueDateLabel = document.createElement('label');
-  taskDueDateLabel.classList.add('form-label');
 
   taskForm.classList.add('task-form');
   taskForm.setAttribute('id', 'task-form');
-
   taskForm.appendChild(taskFormGroup);
+
+  // Append task name input and header
   taskFormGroup.appendChild(taskNameGroup);
-  taskNameGroup.appendChild(componentSectionHeader('Add Task'));
-  taskNameGroup.appendChild(taskNameField);
-  taskNameField.setAttribute('name', 'task-name');
-  taskNameField.setAttribute('id', 'task-name');
-  taskNameField.setAttribute('type', 'text');
-  taskNameField.classList.add('task-name-field');
+  taskNameGroup.appendChild(componentFormTaskName());
 
+  // Append task description input and label
   taskFormGroup.appendChild(descriptionGroup);
-  descriptionGroup.appendChild(taskDescriptionLabel);
-  descriptionGroup.appendChild(taskDescriptionField);
-  taskDescriptionLabel.setAttribute('for', 'task-description');
-  taskDescriptionLabel.textContent = 'Description';
-  taskDescriptionField.setAttribute('name', 'task-description');
-  taskDescriptionField.setAttribute('id', 'task-description');
-  taskDescriptionField.classList.add('task-description-field');
+  descriptionGroup.appendChild(componentFormTaskDescriptionLabel());
+  descriptionGroup.appendChild(componentFormTaskDescription());
 
+  // Add task due date input and label
   taskFormGroup.appendChild(inputGroup);
-  taskDueDateLabel.setAttribute('for', 'due-date');
-  taskDueDateLabel.textContent = 'Due Date';
-  taskDueDateField.setAttribute('name', 'due-date');
-  taskDueDateField.setAttribute('id', 'due-date');
-  taskDueDateField.setAttribute('type', 'date');
-  taskDueDateField.classList.add('due-date-field');
-
   inputGroup.appendChild(taskDueDateGroup);
-  taskDueDateGroup.appendChild(taskDueDateLabel);
-  taskDueDateGroup.appendChild(taskDueDateField);
+  taskDueDateGroup.appendChild(componentFormTaskDueDateLabel());
+  taskDueDateGroup.appendChild(componentFormTaskDueDate());
+
+  // Add task priority selection and label
   inputGroup.appendChild(taskPriorityGroup);
   taskPriorityGroup.appendChild(componentTaskPriorityLabel());
   taskPriorityGroup.appendChild(componentTaskPriority());
 
-  const backIcon = new Image();
-  backIcon.src = LeftSolid;
-  backIcon.classList.add('icons', 'back-icon');
-
+  // Add navigation (back button and submit form button)
   taskForm.appendChild(navigationGroup);
-  navigationGroup.appendChild(backIcon);
-  navigationGroup.appendChild(taskSubmit);
-  taskSubmit.setAttribute('type', 'submit');
-  taskSubmit.setAttribute('id', 'task-submit');
-  taskSubmit.setAttribute('value', 'ADD');
+  navigationGroup.appendChild(componentFormTaskBackButton());
+  navigationGroup.appendChild(componentFormTaskSubmit());
 
   // Event listener for task form
   taskForm.addEventListener('submit', (e) => {
