@@ -8,6 +8,7 @@ import {
   removeActiveClass,
   componentTaskInputForm,
   toggleSidebarHighlight,
+  addTaskToDom,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -93,3 +94,5 @@ const tasksContainer = document.querySelector('.tasks-card');
 addTaskButton.addEventListener('click', () => {
   tasksContainer.replaceChildren(componentTaskInputForm());
 });
+
+addTaskToDom('Finish project');
