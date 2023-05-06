@@ -9,6 +9,7 @@ import {
   componentTaskInputForm,
   toggleSidebarHighlight,
   addTaskToDom,
+  getTaskInformation,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -27,9 +28,14 @@ const primaryTasks = [
 
 const primaryProject = new Project('Primary Project', primaryTasks);
 const secondaryProject = new Project('Secondary Project');
+let selectedProject;
 
 addProject(primaryProject);
 addProject(secondaryProject);
+
+getProjects().forEach((project) => {
+  addProjectToDOM(project);
+});
 
 const taskTwo = new Task(
   'Meal planning',
@@ -60,7 +66,7 @@ projectForm.addEventListener('keypress', (e) => {
     addProject(newProject);
 
     // Add project name to sidebar
-    addProjectToDOM(newProject.getTitle());
+    addProjectToDOM(newProject);
 
     // Remove active class (background color) from any active element
     removeActiveClass();
@@ -84,15 +90,54 @@ showProjectForm.addEventListener('click', () => {
 
 const sidebar = document.querySelector('#sidebar');
 sidebar.addEventListener('click', (e) => {
+  // Assign the element with the closest attribute of 'data-id' as the project button
+  const projectButton = e.target.closest('[data-id]');
+
+  // If the project button does not have a data-id, return to prevent errors
+  if (!projectButton) {
+    return;
+  }
+
   // Highlight currently selected sidebar option and remove any inactive highlighted options
   toggleSidebarHighlight(e.target);
+
+  // Save the data-id of the project button as the project id
+  const projectId = parseInt(projectButton.getAttribute('data-id'), 10);
+
+  // Save the getProjects() array into projects
+  const projects = getProjects();
+
+  // Find the project with id that matches the selected project id
+  const project = projects.find((proj) => proj.id === projectId);
+
+  // If the project is already the selected project, return early to prevent adding the tasks
+  // multiple times
+  if (project === selectedProject) {
+    return;
+  }
+
+  // Make the found project the selected project
+  selectedProject = project;
+
+  // Add each task from the selected project to the DOM
+  selectedProject.tasks.forEach((task) => {
+    addTaskToDom(task);
+  });
 });
 
 // Show task input form when 'Add Task' button is clicked
 const addTaskButton = document.querySelector('.add-task-button');
 const tasksContainer = document.querySelector('.tasks-card');
 addTaskButton.addEventListener('click', () => {
-  tasksContainer.replaceChildren(componentTaskInputForm());
-});
+  const taskForm = componentTaskInputForm();
+  tasksContainer.replaceChildren(taskForm);
 
-addTaskToDom('Finish project');
+  // Event listener for task form
+  taskForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const task = getTaskInformation();
+
+    // Add task to the selected project's array of tasks
+    selectedProject.addTask(task);
+  });
+});

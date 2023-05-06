@@ -357,7 +357,7 @@ function componentFormTaskBackButton() {
 }
 
 // Get task information from Add Task form
-function getTaskInformation() {
+export function getTaskInformation() {
   const taskTitle = document.getElementById('task-name').value;
   const taskDescription = document.getElementById('task-description').value;
   const taskDate = document.getElementById('due-date').value;
@@ -407,12 +407,6 @@ export function componentTaskInputForm() {
   navigationGroup.appendChild(componentFormTaskBackButton());
   navigationGroup.appendChild(componentFormTaskSubmit());
 
-  // Event listener for task form
-  taskForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    getTaskInformation();
-  });
-
   return taskForm;
 }
 
@@ -446,7 +440,7 @@ export function init() {
   const filterWeek = componentFilter();
   const projectsHeader = componentProjectsHeader();
   const projects = componentProjects();
-  const project = componentProject();
+  // const project = componentProject();
   const tasksCard = componentTasksCard();
   const tasks = componentTasks();
 
@@ -473,9 +467,6 @@ export function init() {
   projects.appendChild(componentProjectInputForm());
   document.getElementById('project-submit').hidden = true;
   document.getElementById('project-form').hidden = true;
-  projects.appendChild(project);
-  project.appendChild(componentProjectIcon());
-  project.appendChild(componentProjectTitle('Primary'));
   content.appendChild(tasksCard);
   tasksCard.appendChild(tasks);
   tasks.appendChild(componentSectionHeader('Tasks'));
@@ -484,9 +475,9 @@ export function init() {
 }
 
 // Add task to page
-export function addTaskToDom(taskName) {
+export function addTaskToDom(task) {
   const tasks = document.querySelector('.tasks');
-  tasks.appendChild(displayTask(taskName));
+  tasks.appendChild(displayTask(task.title));
 }
 
 // Get project form
@@ -496,9 +487,11 @@ export function getProjectForm() {
 
 // Add project to page
 export function addProjectToDOM(newProject) {
+  const { id, title } = newProject;
   const projects = document.querySelector('.projects');
   const project = componentProject();
-  const projectTitle = componentProjectTitle(newProject);
+  const projectTitle = componentProjectTitle(title);
+  project.setAttribute('data-id', id);
   projects.insertBefore(project, projects.children[2]);
   project.appendChild(componentProjectIcon());
   project.appendChild(projectTitle);
