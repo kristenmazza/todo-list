@@ -548,6 +548,15 @@ export function toggleSidebarHighlight(element) {
   }
 }
 
+// Show default project when page is loaded
+export function showDefaultProject(selectedProject) {
+  selectedProject.tasks.forEach((task) => {
+    addTaskToDom(task);
+  });
+
+  document.querySelector('[data-id="1"]').classList.add('active');
+}
+
 // Clear tasks from the DOM
 export function clearTasks() {
   const tasks = document.querySelector('.tasks');

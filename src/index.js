@@ -11,6 +11,7 @@ import {
   addTaskToDom,
   getTaskInformation,
   clearTasks,
+  showDefaultProject,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -44,16 +45,7 @@ console.log(getProjects());
 
 let selectedProject = getProjects()[0];
 
-// Show default project when page is loaded
-function showDefaultProject() {
-  selectedProject.tasks.forEach((task) => {
-    addTaskToDom(task);
-  });
-
-  document.querySelector('[data-id="1"]').classList.add('active');
-}
-
-showDefaultProject();
+showDefaultProject(selectedProject);
 
 // Listen to keypress on the project form
 const projectForm = getProjectForm();
