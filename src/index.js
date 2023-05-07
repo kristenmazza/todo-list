@@ -8,10 +8,12 @@ import {
   removeActiveClass,
   componentTaskInputForm,
   toggleSidebarHighlight,
-  addTaskToDom,
   getTaskInformation,
   clearTasks,
   showDefaultProject,
+  closeAddTaskForm,
+  addTasksSectionToDom,
+  showTasksInProject,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -123,9 +125,7 @@ sidebar.addEventListener('click', (e) => {
   clearTasks();
 
   // Add each task from the selected project to the DOM
-  selectedProject.tasks.forEach((task) => {
-    addTaskToDom(task);
-  });
+  showTasksInProject(selectedProject);
 });
 
 // Show task input form when 'Add Task' button is clicked
@@ -142,5 +142,10 @@ addTaskButton.addEventListener('click', () => {
 
     // Add task to the selected project's array of tasks
     selectedProject.addTask(task);
+
+    closeAddTaskForm();
+    addTasksSectionToDom();
+    showTasksInProject(selectedProject);
+    console.log(selectedProject.tasks);
   });
 });

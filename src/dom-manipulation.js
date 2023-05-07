@@ -429,7 +429,7 @@ function displayTask(taskName) {
 }
 
 // Add 'tasks' class section
-function addTasksSectionToDom() {
+export function addTasksSectionToDom() {
   const tasksCard = document.querySelector('.tasks-card');
   const tasks = componentTasks();
   tasksCard.appendChild(tasks);
@@ -563,4 +563,19 @@ export function clearTasks() {
   while (tasks.children.length > 1) {
     tasks.removeChild(tasks.lastChild);
   }
+}
+
+// Remove Add Task form
+export function closeAddTaskForm() {
+  const tasksCard = document.querySelector('.tasks-card');
+  while (tasksCard.children.length > 0) {
+    tasksCard.removeChild(tasksCard.lastChild);
+  }
+}
+
+// Show all tasks in a selected project
+export function showTasksInProject(selection) {
+  selection.tasks.forEach((task) => {
+    addTaskToDom(task);
+  });
 }
