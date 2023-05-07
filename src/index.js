@@ -10,6 +10,7 @@ import {
   toggleSidebarHighlight,
   addTaskToDom,
   getTaskInformation,
+  clearTasks,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -43,6 +44,7 @@ console.log(getProjects());
 
 let selectedProject = getProjects()[0];
 
+// Show default project when page is loaded
 function showDefaultProject() {
   selectedProject.tasks.forEach((task) => {
     addTaskToDom(task);
@@ -124,6 +126,9 @@ sidebar.addEventListener('click', (e) => {
 
   // Make the found project the selected project
   selectedProject = project;
+
+  // Clear tasks from the DOM
+  clearTasks();
 
   // Add each task from the selected project to the DOM
   selectedProject.tasks.forEach((task) => {

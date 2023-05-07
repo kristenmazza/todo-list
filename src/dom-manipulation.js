@@ -547,3 +547,11 @@ export function toggleSidebarHighlight(element) {
     element.parentNode.classList.toggle('active');
   }
 }
+
+// Clear tasks from the DOM
+export function clearTasks() {
+  const tasks = document.querySelector('.tasks');
+  while (tasks.children.length > 1) {
+    tasks.removeChild(tasks.lastChild);
+  }
+}
