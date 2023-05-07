@@ -18,17 +18,11 @@ import { getProjects, addProject } from './site-storage';
 init();
 
 const primaryTasks = [
-  new Task(
-    'Respond to emails',
-    'Catch up on personal and work emails',
-    '3/4/2023',
-    1
-  ),
+  new Task('Respond to emails', 'Catch up on personal emails', '3/4/2023', 1),
 ];
 
-const primaryProject = new Project('Primary Project', primaryTasks);
-const secondaryProject = new Project('Secondary Project');
-let selectedProject;
+const primaryProject = new Project('Home', primaryTasks);
+const secondaryProject = new Project('Work');
 
 addProject(primaryProject);
 addProject(secondaryProject);
@@ -46,6 +40,18 @@ const taskTwo = new Task(
 
 primaryProject.addTask(taskTwo);
 console.log(getProjects());
+
+let selectedProject = getProjects()[0];
+
+function showDefaultProject() {
+  selectedProject.tasks.forEach((task) => {
+    addTaskToDom(task);
+  });
+
+  document.querySelector('[data-id="1"]').classList.add('active');
+}
+
+showDefaultProject();
 
 // Listen to keypress on the project form
 const projectForm = getProjectForm();
