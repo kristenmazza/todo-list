@@ -428,6 +428,16 @@ function displayTask(taskName) {
   return task;
 }
 
+// Add 'tasks' class section
+function addTasksSectionToDom() {
+  const tasksCard = document.querySelector('.tasks-card');
+  const tasks = componentTasks();
+  tasksCard.appendChild(tasks);
+  tasksCard.appendChild(componentAddTaskButton());
+  tasks.appendChild(componentSectionHeader('Tasks'));
+  return tasksCard;
+}
+
 // Initialize page
 export function init() {
   const container = componentContainer();
@@ -440,9 +450,7 @@ export function init() {
   const filterWeek = componentFilter();
   const projectsHeader = componentProjectsHeader();
   const projects = componentProjects();
-  // const project = componentProject();
   const tasksCard = componentTasksCard();
-  const tasks = componentTasks();
 
   document.body.appendChild(container);
   container.appendChild(header);
@@ -468,10 +476,7 @@ export function init() {
   document.getElementById('project-submit').hidden = true;
   document.getElementById('project-form').hidden = true;
   content.appendChild(tasksCard);
-  tasksCard.appendChild(tasks);
-  tasks.appendChild(componentSectionHeader('Tasks'));
-
-  tasksCard.appendChild(componentAddTaskButton());
+  addTasksSectionToDom();
 }
 
 // Add task to page
