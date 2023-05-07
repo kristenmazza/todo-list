@@ -14,6 +14,7 @@ import {
   closeAddTaskForm,
   addTasksSectionToDom,
   showTasksInProject,
+  addOnClickToAddTaskButton,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -146,6 +147,7 @@ addTaskButton.addEventListener('click', () => {
     closeAddTaskForm();
     addTasksSectionToDom();
     showTasksInProject(selectedProject);
+    addOnClickToAddTaskButton();
     console.log(selectedProject.tasks);
   });
 });

@@ -579,3 +579,15 @@ export function showTasksInProject(selection) {
     addTaskToDom(task);
   });
 }
+
+// Show the Add Task form
+function showAddTaskForm() {
+  const tasksContainer = document.querySelector('.tasks-card');
+  tasksContainer.replaceChildren(componentTaskInputForm());
+}
+
+// Make Add Task button clickable again when content is re-generated
+export function addOnClickToAddTaskButton() {
+  const addTaskButton = document.querySelector('.add-task-button');
+  addTaskButton.onclick = showAddTaskForm;
+}
