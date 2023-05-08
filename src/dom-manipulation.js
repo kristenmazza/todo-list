@@ -229,13 +229,6 @@ function componentTrashIcon() {
   return trashIcon;
 }
 
-function componentAddTaskButton() {
-  const addTaskButton = document.createElement('button');
-  addTaskButton.classList.add('add-task-button');
-  addTaskButton.textContent = 'Add Task';
-  return addTaskButton;
-}
-
 // Add Task form
 function componentTaskFormGroup() {
   const formGroup = document.createElement('div');
@@ -341,10 +334,10 @@ function componentFormTaskDueDateLabel() {
 
 // Add Task form submit button
 function componentFormTaskSubmit() {
-  const taskSubmit = document.createElement('input');
+  const taskSubmit = document.createElement('button');
   taskSubmit.setAttribute('type', 'submit');
   taskSubmit.setAttribute('id', 'task-submit');
-  taskSubmit.setAttribute('value', 'ADD');
+  taskSubmit.textContent = 'ADD';
   return taskSubmit;
 }
 
@@ -368,7 +361,7 @@ export function getTaskInformation() {
 }
 
 // Full Add Task input form
-export function componentTaskInputForm() {
+export function componentTaskInputForm(createTask) {
   const taskForm = document.createElement('form');
   const taskFormGroup = componentTaskFormGroup();
   const taskNameGroup = componentTaskItemGroup();
@@ -381,6 +374,14 @@ export function componentTaskInputForm() {
   taskForm.classList.add('task-form');
   taskForm.setAttribute('id', 'task-form');
   taskForm.appendChild(taskFormGroup);
+
+  taskForm.onsubmit = (e) => {
+    e.preventDefault();
+    createTask();
+    // Pass all the information needed into createTask method to create a task, from index.js so you have
+    // a reference to the project.
+    // After createTask is called, go back to list of tasks.
+  };
 
   // Append task name input and header
   taskFormGroup.appendChild(taskNameGroup);
@@ -428,18 +429,36 @@ function displayTask(taskName) {
   return task;
 }
 
+// Show the Add Task form
+function showAddTaskForm(createTask) {
+  const tasksContainer = document.querySelector('.tasks-card');
+  tasksContainer.replaceChildren(componentTaskInputForm(createTask));
+}
+
+function componentAddTaskButton(createTask) {
+  const addTaskButton = document.createElement('button');
+  addTaskButton.classList.add('add-task-button');
+  addTaskButton.textContent = 'Add Task';
+  addTaskButton.onclick = (e) => {
+    e.preventDefault();
+    showAddTaskForm(createTask);
+  };
+
+  return addTaskButton;
+}
+
 // Add 'tasks' class section
-export function addTasksSectionToDom() {
+export function addTasksSectionToDom(createTask) {
   const tasksCard = document.querySelector('.tasks-card');
   const tasks = componentTasks();
   tasksCard.appendChild(tasks);
-  tasksCard.appendChild(componentAddTaskButton());
+  tasksCard.appendChild(componentAddTaskButton(createTask));
   tasks.appendChild(componentSectionHeader('Tasks'));
   return tasksCard;
 }
 
 // Initialize page
-export function init() {
+export function init(createTask) {
   const container = componentContainer();
   const header = componentHeader();
   const content = componentContent();
@@ -476,7 +495,7 @@ export function init() {
   document.getElementById('project-submit').hidden = true;
   document.getElementById('project-form').hidden = true;
   content.appendChild(tasksCard);
-  addTasksSectionToDom();
+  addTasksSectionToDom(createTask);
 }
 
 // Add task to page
@@ -578,16 +597,4 @@ export function showTasksInProject(selection) {
   selection.tasks.forEach((task) => {
     addTaskToDom(task);
   });
-}
-
-// Show the Add Task form
-function showAddTaskForm() {
-  const tasksContainer = document.querySelector('.tasks-card');
-  tasksContainer.replaceChildren(componentTaskInputForm());
-}
-
-// Make Add Task button clickable again when content is re-generated
-export function addOnClickToAddTaskButton() {
-  const addTaskButton = document.querySelector('.add-task-button');
-  addTaskButton.onclick = showAddTaskForm;
 }

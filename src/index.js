@@ -6,21 +6,22 @@ import {
   expandCreateProjectForm,
   rotateAddProjectIcon,
   removeActiveClass,
-  componentTaskInputForm,
   toggleSidebarHighlight,
-  getTaskInformation,
   clearTasks,
   showDefaultProject,
-  closeAddTaskForm,
-  addTasksSectionToDom,
   showTasksInProject,
-  addOnClickToAddTaskButton,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
 import { getProjects, addProject } from './site-storage';
 
-init();
+function createTask(test) {
+  console.log(`I'm here`);
+
+  console.log(test);
+}
+
+init(createTask);
 
 const primaryTasks = [
   new Task('Respond to emails', 'Catch up on personal emails', '3/4/2023', 1),
@@ -127,27 +128,4 @@ sidebar.addEventListener('click', (e) => {
 
   // Add each task from the selected project to the DOM
   showTasksInProject(selectedProject);
-});
-
-// Show task input form when 'Add Task' button is clicked
-const addTaskButton = document.querySelector('.add-task-button');
-const tasksContainer = document.querySelector('.tasks-card');
-addTaskButton.addEventListener('click', () => {
-  const taskForm = componentTaskInputForm();
-  tasksContainer.replaceChildren(taskForm);
-
-  // Event listener for task form
-  taskForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const task = getTaskInformation();
-
-    // Add task to the selected project's array of tasks
-    selectedProject.addTask(task);
-
-    closeAddTaskForm();
-    addTasksSectionToDom();
-    showTasksInProject(selectedProject);
-    addOnClickToAddTaskButton();
-    console.log(selectedProject.tasks);
-  });
 });
