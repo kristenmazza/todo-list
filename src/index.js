@@ -10,18 +10,14 @@ import {
   clearTasks,
   showDefaultProject,
   showTasksInProject,
+  getTaskInformation,
+  closeAddTaskForm,
+  showTasksSection,
+  showAddTaskForm,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
 import { getProjects, addProject } from './site-storage';
-
-function createTask(test) {
-  console.log(`I'm here`);
-
-  console.log(test);
-}
-
-init(createTask);
 
 const primaryTasks = [
   new Task('Respond to emails', 'Catch up on personal emails', '3/4/2023', 1),
@@ -32,10 +28,6 @@ const secondaryProject = new Project('Work');
 
 addProject(primaryProject);
 addProject(secondaryProject);
-
-getProjects().forEach((project) => {
-  addProjectToDOM(project);
-});
 
 const taskTwo = new Task(
   'Meal planning',
@@ -48,6 +40,50 @@ primaryProject.addTask(taskTwo);
 console.log(getProjects());
 
 let selectedProject = getProjects()[0];
+
+function createTask() {
+  const task = getTaskInformation();
+
+  // Add task to the selected project's array of tasks
+  selectedProject.addTask(task);
+}
+
+// This is a conditional that determines if you're looking at the task list or the task form.
+// If you're in the task list on click, then show the task form.
+// If you're in the task form on submit, then show the task list.
+function controllDisplay(comingFrom) {
+  if (comingFrom === 'task list') {
+    showAddTaskForm(
+      (e) => {
+        e.preventDefault();
+        createTask();
+        controllDisplay('task form');
+      },
+      (e) => {
+        e.preventDefault();
+        controllDisplay('task form');
+      }
+    );
+  } else if (comingFrom === 'task form') {
+    closeAddTaskForm();
+    showTasksSection((e) => {
+      e.preventDefault();
+      controllDisplay('task list');
+    });
+    showTasksInProject(selectedProject);
+  }
+}
+
+function onClickOfAddTaskButton(e) {
+  e.preventDefault();
+  controllDisplay('task list');
+}
+
+init(onClickOfAddTaskButton);
+
+getProjects().forEach((project) => {
+  addProjectToDOM(project);
+});
 
 showDefaultProject(selectedProject);
 

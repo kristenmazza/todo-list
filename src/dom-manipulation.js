@@ -342,10 +342,11 @@ function componentFormTaskSubmit() {
 }
 
 // Add Task form back button
-function componentFormTaskBackButton() {
+function componentFormTaskBackButton(onCancel) {
   const backIcon = new Image();
   backIcon.src = LeftSolid;
   backIcon.classList.add('icons', 'back-icon');
+  backIcon.onclick = onCancel;
   return backIcon;
 }
 
@@ -361,7 +362,7 @@ export function getTaskInformation() {
 }
 
 // Full Add Task input form
-export function componentTaskInputForm(createTask) {
+export function componentTaskInputForm(onsubmit, onCancel) {
   const taskForm = document.createElement('form');
   const taskFormGroup = componentTaskFormGroup();
   const taskNameGroup = componentTaskItemGroup();
@@ -375,13 +376,7 @@ export function componentTaskInputForm(createTask) {
   taskForm.setAttribute('id', 'task-form');
   taskForm.appendChild(taskFormGroup);
 
-  taskForm.onsubmit = (e) => {
-    e.preventDefault();
-    createTask();
-    // Pass all the information needed into createTask method to create a task, from index.js so you have
-    // a reference to the project.
-    // After createTask is called, go back to list of tasks.
-  };
+  taskForm.onsubmit = onsubmit;
 
   // Append task name input and header
   taskFormGroup.appendChild(taskNameGroup);
@@ -405,7 +400,7 @@ export function componentTaskInputForm(createTask) {
 
   // Add navigation (back button and submit form button)
   taskForm.appendChild(navigationGroup);
-  navigationGroup.appendChild(componentFormTaskBackButton());
+  navigationGroup.appendChild(componentFormTaskBackButton(onCancel));
   navigationGroup.appendChild(componentFormTaskSubmit());
 
   return taskForm;
@@ -430,35 +425,31 @@ function displayTask(taskName) {
 }
 
 // Show the Add Task form
-function showAddTaskForm(createTask) {
+export function showAddTaskForm(onsubmit, onCancel) {
   const tasksContainer = document.querySelector('.tasks-card');
-  tasksContainer.replaceChildren(componentTaskInputForm(createTask));
+  tasksContainer.replaceChildren(componentTaskInputForm(onsubmit, onCancel));
 }
 
-function componentAddTaskButton(createTask) {
+function componentAddTaskButton(onClickOfAddTaskButton) {
   const addTaskButton = document.createElement('button');
   addTaskButton.classList.add('add-task-button');
   addTaskButton.textContent = 'Add Task';
-  addTaskButton.onclick = (e) => {
-    e.preventDefault();
-    showAddTaskForm(createTask);
-  };
-
+  addTaskButton.onclick = onClickOfAddTaskButton;
   return addTaskButton;
 }
 
 // Add 'tasks' class section
-export function addTasksSectionToDom(createTask) {
+export function showTasksSection(onClickOfAddTaskButton) {
   const tasksCard = document.querySelector('.tasks-card');
   const tasks = componentTasks();
   tasksCard.appendChild(tasks);
-  tasksCard.appendChild(componentAddTaskButton(createTask));
+  tasksCard.appendChild(componentAddTaskButton(onClickOfAddTaskButton));
   tasks.appendChild(componentSectionHeader('Tasks'));
   return tasksCard;
 }
 
 // Initialize page
-export function init(createTask) {
+export function init(onClickOfAddTaskButton) {
   const container = componentContainer();
   const header = componentHeader();
   const content = componentContent();
@@ -495,7 +486,7 @@ export function init(createTask) {
   document.getElementById('project-submit').hidden = true;
   document.getElementById('project-form').hidden = true;
   content.appendChild(tasksCard);
-  addTasksSectionToDom(createTask);
+  showTasksSection(onClickOfAddTaskButton);
 }
 
 // Add task to page
