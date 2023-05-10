@@ -203,6 +203,18 @@ function componentCheckboxLabel(projectTitle) {
   return checkboxLabel;
 }
 
+function componentPermanentTaskDisplay() {
+  const permanentTaskDisplay = document.createElement('div');
+  permanentTaskDisplay.classList.add('permanent-task-display');
+  return permanentTaskDisplay;
+}
+
+function componentOptionalTaskDisplay() {
+  const optionalTaskDisplay = document.createElement('div');
+  optionalTaskDisplay.classList.add('optional-task-display');
+  return optionalTaskDisplay;
+}
+
 function componentTaskInfo() {
   const taskInfo = document.createElement('div');
   taskInfo.classList.add('task-info');
@@ -227,6 +239,32 @@ function componentTrashIcon() {
   trashIcon.src = TrashIcon;
   trashIcon.classList.add('icons');
   return trashIcon;
+}
+
+function componentExpandedTaskInfoColumn() {
+  const expandedTaskInfoColumn = document.createElement('div');
+  expandedTaskInfoColumn.classList.add('task-info-column');
+  return expandedTaskInfoColumn;
+}
+
+function componentExpandedTaskInfoCell() {
+  const expandedTaskInfoCell = document.createElement('div');
+  expandedTaskInfoCell.classList.add('expanded-task-info-cell');
+  return expandedTaskInfoCell;
+}
+
+function componentExpandedTaskSpanBold(title) {
+  const expandedTaskSpanBold = document.createElement('span');
+  expandedTaskSpanBold.classList.add('expanded-task-span-bold');
+  expandedTaskSpanBold.textContent = title;
+  return expandedTaskSpanBold;
+}
+
+function componentExpandedTaskSpan(text) {
+  const expandedTaskSpan = document.createElement('span');
+  expandedTaskSpan.classList.add('expanded-task-span');
+  expandedTaskSpan.textContent = text;
+  return expandedTaskSpan;
 }
 
 // Add Task form
@@ -406,20 +444,64 @@ export function componentTaskInputForm(onsubmit, onCancel) {
   return taskForm;
 }
 
-// Task row
-function displayTask(taskName) {
+// Individual task displayed in task list
+function displayTask(taskName, taskDescription, taskDueDate, taskPriority) {
   const task = componentTask();
   const taskInfo = componentTaskInfo();
+  const permanentTaskDisplay = componentPermanentTaskDisplay();
+  const optionalTaskDisplay = componentOptionalTaskDisplay();
   const checkbox = componentCheckbox();
   const editTools = componentEditTools();
+  const expandedTaskInfoColumn = componentExpandedTaskInfoColumn();
+  const expandedTaskInfoColumn2 = componentExpandedTaskInfoColumn();
+  const expandedTaskInfoCellTitle = componentExpandedTaskInfoCell();
+  const expandedTaskInfoCellDescription = componentExpandedTaskInfoCell();
+  const expandedTaskInfoCellDueDate = componentExpandedTaskInfoCell();
+  const expandedTaskInfoCellPriority = componentExpandedTaskInfoCell();
 
-  task.appendChild(taskInfo);
+  task.appendChild(permanentTaskDisplay);
+  permanentTaskDisplay.appendChild(taskInfo);
   taskInfo.appendChild(checkbox);
   checkbox.appendChild(componentCheckboxField());
   checkbox.appendChild(componentCheckboxLabel(taskName));
-  task.appendChild(editTools);
+  permanentTaskDisplay.appendChild(editTools);
   editTools.appendChild(componentEditIcon());
   editTools.appendChild(componentTrashIcon());
+  task.appendChild(optionalTaskDisplay);
+
+  // Optional task display (expandable)
+  optionalTaskDisplay.appendChild(expandedTaskInfoColumn);
+  expandedTaskInfoColumn.appendChild(expandedTaskInfoCellTitle);
+
+  expandedTaskInfoCellTitle.appendChild(
+    componentExpandedTaskSpanBold('Title: ')
+  );
+  expandedTaskInfoCellTitle.appendChild(componentExpandedTaskSpan(taskName));
+
+  expandedTaskInfoColumn.appendChild(expandedTaskInfoCellDueDate);
+  expandedTaskInfoCellDueDate.appendChild(
+    componentExpandedTaskSpanBold('Due Date: ')
+  );
+  expandedTaskInfoCellDueDate.appendChild(
+    componentExpandedTaskSpan(taskDueDate)
+  );
+
+  optionalTaskDisplay.appendChild(expandedTaskInfoColumn2);
+  expandedTaskInfoColumn2.appendChild(expandedTaskInfoCellDescription);
+  expandedTaskInfoCellDescription.appendChild(
+    componentExpandedTaskSpanBold('Description: ')
+  );
+  expandedTaskInfoCellDescription.appendChild(
+    componentExpandedTaskSpan(taskDescription)
+  );
+
+  expandedTaskInfoColumn2.appendChild(expandedTaskInfoCellPriority);
+  expandedTaskInfoCellPriority.appendChild(
+    componentExpandedTaskSpanBold('Priority: ')
+  );
+  expandedTaskInfoCellPriority.appendChild(
+    componentExpandedTaskSpan(taskPriority)
+  );
 
   return task;
 }
@@ -492,7 +574,9 @@ export function init(onClickOfAddTaskButton) {
 // Add task to page
 export function addTaskToDom(task) {
   const tasks = document.querySelector('.tasks');
-  tasks.appendChild(displayTask(task.title));
+  tasks.appendChild(
+    displayTask(task.title, task.description, task.dueDate, task.priority)
+  );
 }
 
 // Get project form

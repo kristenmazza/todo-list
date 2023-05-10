@@ -140,7 +140,8 @@ h1 {
   min-height: 100%;
 }
 
-.task {
+/* .task, */
+.permanent-task-display {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -204,6 +205,21 @@ input[type='checkbox']:checked::before {
 input[type='checkbox']:checked + label {
   text-decoration: line-through;
   color: rgb(193, 224, 225);
+}
+
+.optional-task-display {
+  display: flex;
+  gap: 5%;
+}
+
+.expanded-task-span-bold {
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.expanded-task-span {
+  font-weight: 400;
+  font-size: 0.9rem;
 }
 
 .add-task-button,
