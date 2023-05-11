@@ -15,6 +15,7 @@ import {
   showTasksSection,
   showAddTaskForm,
   toggleOptionalTaskDisplay,
+  deleteTask,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -170,5 +171,9 @@ sidebar.addEventListener('click', (e) => {
 // Click handler to show/hide optional task display
 const taskList = document.querySelector('.tasks-card');
 taskList.addEventListener('click', (e) => {
-  toggleOptionalTaskDisplay(e);
+  if (e.target.classList.contains('checkbox-label')) {
+    toggleOptionalTaskDisplay(e);
+  } else if (e.target.classList.contains('trash-icon')) {
+    deleteTask(e, selectedProject);
+  }
 });

@@ -238,6 +238,7 @@ function componentTrashIcon() {
   const trashIcon = new Image();
   trashIcon.src = TrashIcon;
   trashIcon.classList.add('icons');
+  trashIcon.classList.add('trash-icon');
   return trashIcon;
 }
 
@@ -466,6 +467,8 @@ function displayTask(
   const expandedTaskInfoCellDueDate = componentExpandedTaskInfoCell();
   const expandedTaskInfoCellPriority = componentExpandedTaskInfoCell();
   const checkboxLabel = componentCheckboxLabel(taskName);
+  const editIcon = componentEditIcon();
+  const trashIcon = componentTrashIcon();
 
   task.appendChild(permanentTaskDisplay);
   permanentTaskDisplay.appendChild(taskInfo);
@@ -473,11 +476,13 @@ function displayTask(
   checkbox.appendChild(componentCheckboxField());
   checkbox.appendChild(checkboxLabel);
   permanentTaskDisplay.appendChild(editTools);
-  editTools.appendChild(componentEditIcon());
-  editTools.appendChild(componentTrashIcon());
+  editTools.appendChild(editIcon);
+  editTools.appendChild(trashIcon);
   task.appendChild(optionalTaskDisplay);
 
   checkboxLabel.setAttribute('data-id', taskId);
+  editIcon.setAttribute('edit-id', taskId);
+  trashIcon.setAttribute('del-id', taskId);
 
   // Optional task display (expandable)
   optionalTaskDisplay.appendChild(expandedTaskInfoColumn);
@@ -692,13 +697,20 @@ export function showTasksInProject(selection) {
 
 // Toggle optional task information display when clicking the checkbox label
 export function toggleOptionalTaskDisplay(e) {
-  if (e.target.classList.contains('checkbox-label')) {
-    const optionalDisplay = e.target.closest('.task').children[1];
+  const optionalDisplay = e.target.closest('.task').children[1];
 
-    if (optionalDisplay.style.display === 'flex') {
-      optionalDisplay.style.display = 'none';
-    } else {
-      optionalDisplay.style.display = 'flex';
-    }
+  if (optionalDisplay.style.display === 'flex') {
+    optionalDisplay.style.display = 'none';
+  } else {
+    optionalDisplay.style.display = 'flex';
   }
+}
+
+export function deleteTask(e, selectedProject) {
+  e.target.parentElement.parentElement.parentElement.remove();
+
+  const taskToDelete = selectedProject.tasks.findIndex(
+    (task) => task.id.toString() === e.target.getAttribute('del-id')
+  );
+  selectedProject.tasks.splice(taskToDelete, 1);
 }

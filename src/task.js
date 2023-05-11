@@ -1,4 +1,4 @@
-let taskId = 1;
+let taskId = 0;
 
 export default class Task {
   constructor(title, description, dueDate, priority) {
