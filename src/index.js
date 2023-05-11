@@ -168,7 +168,7 @@ sidebar.addEventListener('click', (e) => {
 });
 
 // Click handler to show/hide optional task display
-const taskList = document.querySelector('.tasks');
+const taskList = document.querySelector('.tasks-card');
 taskList.addEventListener('click', (e) => {
   toggleOptionalTaskDisplay(e);
 });

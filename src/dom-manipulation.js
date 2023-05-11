@@ -690,6 +690,7 @@ export function showTasksInProject(selection) {
   });
 }
 
+// Toggle optional task information display when clicking the checkbox label
 export function toggleOptionalTaskDisplay(e) {
   if (e.target.classList.contains('checkbox-label')) {
     const optionalDisplay = e.target.closest('.task').children[1];
