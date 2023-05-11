@@ -396,6 +396,7 @@ export function getTaskInformation() {
   const taskPriority = document.getElementById('priority').value;
 
   const task = new Task(taskTitle, taskDescription, taskDate, taskPriority);
+
   return task;
 }
 
@@ -445,7 +446,13 @@ export function componentTaskInputForm(onsubmit, onCancel) {
 }
 
 // Individual task displayed in task list
-function displayTask(taskName, taskDescription, taskDueDate, taskPriority) {
+function displayTask(
+  taskName,
+  taskDescription,
+  taskDueDate,
+  taskPriority,
+  taskId
+) {
   const task = componentTask();
   const taskInfo = componentTaskInfo();
   const permanentTaskDisplay = componentPermanentTaskDisplay();
@@ -458,16 +465,19 @@ function displayTask(taskName, taskDescription, taskDueDate, taskPriority) {
   const expandedTaskInfoCellDescription = componentExpandedTaskInfoCell();
   const expandedTaskInfoCellDueDate = componentExpandedTaskInfoCell();
   const expandedTaskInfoCellPriority = componentExpandedTaskInfoCell();
+  const checkboxLabel = componentCheckboxLabel(taskName);
 
   task.appendChild(permanentTaskDisplay);
   permanentTaskDisplay.appendChild(taskInfo);
   taskInfo.appendChild(checkbox);
   checkbox.appendChild(componentCheckboxField());
-  checkbox.appendChild(componentCheckboxLabel(taskName));
+  checkbox.appendChild(checkboxLabel);
   permanentTaskDisplay.appendChild(editTools);
   editTools.appendChild(componentEditIcon());
   editTools.appendChild(componentTrashIcon());
   task.appendChild(optionalTaskDisplay);
+
+  checkboxLabel.setAttribute('data-id', taskId);
 
   // Optional task display (expandable)
   optionalTaskDisplay.appendChild(expandedTaskInfoColumn);
@@ -575,7 +585,13 @@ export function init(onClickOfAddTaskButton) {
 export function addTaskToDom(task) {
   const tasks = document.querySelector('.tasks');
   tasks.appendChild(
-    displayTask(task.title, task.description, task.dueDate, task.priority)
+    displayTask(
+      task.title,
+      task.description,
+      task.dueDate,
+      task.priority,
+      task.id
+    )
   );
 }
 
@@ -672,4 +688,16 @@ export function showTasksInProject(selection) {
   selection.tasks.forEach((task) => {
     addTaskToDom(task);
   });
+}
+
+export function toggleOptionalTaskDisplay(e) {
+  if (e.target.classList.contains('checkbox-label')) {
+    const optionalDisplay = e.target.closest('.task').children[1];
+
+    if (optionalDisplay.style.display === 'flex') {
+      optionalDisplay.style.display = 'none';
+    } else {
+      optionalDisplay.style.display = 'flex';
+    }
+  }
 }

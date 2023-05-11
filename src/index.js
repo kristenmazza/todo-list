@@ -14,6 +14,7 @@ import {
   closeAddTaskForm,
   showTasksSection,
   showAddTaskForm,
+  toggleOptionalTaskDisplay,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -164,4 +165,10 @@ sidebar.addEventListener('click', (e) => {
 
   // Add each task from the selected project to the DOM
   showTasksInProject(selectedProject);
+});
+
+// Click handler to show/hide optional task display
+const taskList = document.querySelector('.tasks');
+taskList.addEventListener('click', (e) => {
+  toggleOptionalTaskDisplay(e);
 });
