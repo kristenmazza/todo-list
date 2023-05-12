@@ -1,6 +1,3 @@
-// create list of projects
-// methods to add projects and get projects
-
 const projects = [];
 
 export function getProjects() {
@@ -9,4 +6,8 @@ export function getProjects() {
 
 export function addProject(project) {
   projects.push(project);
+}
+
+export function getAllTasks() {
+  // return array
 }

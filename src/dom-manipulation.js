@@ -1,4 +1,5 @@
 import './style.css';
+import format from 'date-fns/format';
 import InboxIcon from './images/inbox-solid.svg';
 import CalendarDayIcon from './images/calendar-day-solid.svg';
 import CalendarWeekIcon from './images/calendar-week-solid.svg';
@@ -497,8 +498,11 @@ function displayTask(
   expandedTaskInfoCellDueDate.appendChild(
     componentExpandedTaskSpanBold('Due Date: ')
   );
+
   expandedTaskInfoCellDueDate.appendChild(
-    componentExpandedTaskSpan(taskDueDate)
+    componentExpandedTaskSpan(
+      format(new Date(taskDueDate), 'eeee, MMMM dd, yyyy')
+    )
   );
 
   optionalTaskDisplay.appendChild(expandedTaskInfoColumn2);
