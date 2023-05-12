@@ -360,6 +360,7 @@ function componentFormTaskDueDate() {
   taskDueDateField.setAttribute('id', 'due-date');
   taskDueDateField.setAttribute('type', 'date');
   taskDueDateField.classList.add('due-date-field');
+  taskDueDateField.required = true;
   return taskDueDateField;
 }
 
@@ -445,6 +446,75 @@ export function componentTaskInputForm(onsubmit, onCancel) {
   navigationGroup.appendChild(componentFormTaskSubmit());
 
   return taskForm;
+}
+
+function displayTaskInAllFilter(
+  taskName,
+  taskDescription,
+  taskDueDate,
+  taskPriority,
+  taskId
+) {
+  const task = componentTask();
+  const taskInfo = componentTaskInfo();
+  const permanentTaskDisplay = componentPermanentTaskDisplay();
+  const optionalTaskDisplay = componentOptionalTaskDisplay();
+  const checkbox = componentCheckbox();
+  const expandedTaskInfoColumn = componentExpandedTaskInfoColumn();
+  const expandedTaskInfoColumn2 = componentExpandedTaskInfoColumn();
+  const expandedTaskInfoCellTitle = componentExpandedTaskInfoCell();
+  const expandedTaskInfoCellDescription = componentExpandedTaskInfoCell();
+  const expandedTaskInfoCellDueDate = componentExpandedTaskInfoCell();
+  const expandedTaskInfoCellPriority = componentExpandedTaskInfoCell();
+  const checkboxLabel = componentCheckboxLabel(taskName);
+
+  task.appendChild(permanentTaskDisplay);
+  permanentTaskDisplay.appendChild(taskInfo);
+  taskInfo.appendChild(checkbox);
+  checkbox.appendChild(componentCheckboxField());
+  checkbox.appendChild(checkboxLabel);
+  task.appendChild(optionalTaskDisplay);
+
+  checkboxLabel.setAttribute('data-id', taskId);
+
+  // Optional task display (expandable)
+  optionalTaskDisplay.appendChild(expandedTaskInfoColumn);
+  expandedTaskInfoColumn.appendChild(expandedTaskInfoCellTitle);
+
+  expandedTaskInfoCellTitle.appendChild(
+    componentExpandedTaskSpanBold('Title: ')
+  );
+  expandedTaskInfoCellTitle.appendChild(componentExpandedTaskSpan(taskName));
+
+  expandedTaskInfoColumn.appendChild(expandedTaskInfoCellDueDate);
+  expandedTaskInfoCellDueDate.appendChild(
+    componentExpandedTaskSpanBold('Due Date: ')
+  );
+
+  expandedTaskInfoCellDueDate.appendChild(
+    componentExpandedTaskSpan(
+      format(new Date(taskDueDate), 'eeee, MMMM dd, yyyy')
+    )
+  );
+
+  optionalTaskDisplay.appendChild(expandedTaskInfoColumn2);
+  expandedTaskInfoColumn2.appendChild(expandedTaskInfoCellDescription);
+  expandedTaskInfoCellDescription.appendChild(
+    componentExpandedTaskSpanBold('Description: ')
+  );
+  expandedTaskInfoCellDescription.appendChild(
+    componentExpandedTaskSpan(taskDescription)
+  );
+
+  expandedTaskInfoColumn2.appendChild(expandedTaskInfoCellPriority);
+  expandedTaskInfoCellPriority.appendChild(
+    componentExpandedTaskSpanBold('Priority: ')
+  );
+  expandedTaskInfoCellPriority.appendChild(
+    componentExpandedTaskSpan(taskPriority)
+  );
+
+  return task;
 }
 
 // Individual task displayed in task list
@@ -571,6 +641,7 @@ export function init(onClickOfAddTaskButton) {
   sidebar.appendChild(filters);
   filters.appendChild(componentSectionHeader('Filters'));
   filters.appendChild(filterAll);
+  filterAll.classList.add('filter-all');
   filterAll.appendChild(componentInboxIcon());
   filterAll.appendChild(componentFilterName('All'));
   filters.appendChild(filterToday);
@@ -595,6 +666,19 @@ export function addTaskToDom(task) {
   const tasks = document.querySelector('.tasks');
   tasks.appendChild(
     displayTask(
+      task.title,
+      task.description,
+      task.dueDate,
+      task.priority,
+      task.id
+    )
+  );
+}
+
+export function addTaskToAllFilter(task) {
+  const tasks = document.querySelector('.tasks');
+  tasks.appendChild(
+    displayTaskInAllFilter(
       task.title,
       task.description,
       task.dueDate,
@@ -682,6 +766,16 @@ export function clearTasks() {
   while (tasks.children.length > 1) {
     tasks.removeChild(tasks.lastChild);
   }
+}
+
+export function hideAddTaskButton() {
+  const addTaskButton = document.querySelector('.add-task-button');
+  addTaskButton.style.display = 'none';
+}
+
+export function showAddTaskButton() {
+  const addTaskButton = document.querySelector('.add-task-button');
+  addTaskButton.style.display = '';
 }
 
 // Remove Add Task form

@@ -16,10 +16,13 @@ import {
   showAddTaskForm,
   toggleOptionalTaskDisplay,
   deleteTask,
+  hideAddTaskButton,
+  showAddTaskButton,
+  addTaskToAllFilter,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
-import { getProjects, addProject } from './site-storage';
+import { getProjects, addProject, getAllTasks } from './site-storage';
 
 const primaryTasks = [
   new Task('Respond to emails', 'Catch up on personal emails', '3/4/2023', 1),
@@ -132,40 +135,57 @@ showProjectForm.addEventListener('click', () => {
 
 const sidebar = document.querySelector('#sidebar');
 sidebar.addEventListener('click', (e) => {
-  // Assign the element with the closest attribute of 'data-id' as the project button
   const projectButton = e.target.closest('[data-id]');
+  const filterButton = e.target.closest('.filter');
 
-  // If the project button does not have a data-id, return to prevent errors
-  if (!projectButton) {
+  // If not clicking a project or filter button, return to prevent errors
+  if (!projectButton && !filterButton) {
     return;
   }
 
   // Highlight currently selected sidebar option and remove any inactive highlighted options
   toggleSidebarHighlight(e.target);
 
-  // Save the data-id of the project button as the project id
-  const projectId = parseInt(projectButton.getAttribute('data-id'), 10);
+  if (projectButton) {
+    // Save the data-id of the project button as the project id
+    const projectId = parseInt(projectButton.getAttribute('data-id'), 10);
 
-  // Save the getProjects() array into projects
-  const projects = getProjects();
+    // Save the getProjects() array into projects
+    const projects = getProjects();
 
-  // Find the project with id that matches the selected project id
-  const project = projects.find((proj) => proj.id === projectId);
+    // Find the project with id that matches the selected project id
+    const project = projects.find((proj) => proj.id === projectId);
 
-  // If the project is already the selected project, return early to prevent adding the tasks
-  // multiple times
-  if (project === selectedProject) {
-    return;
+    // If the project is already the selected project, return early to prevent adding the tasks
+    // multiple times
+    if (project === selectedProject) {
+      return;
+    }
+
+    // Make the found project the selected project
+    selectedProject = project;
+
+    // Clear tasks from the DOM
+    clearTasks();
+
+    showAddTaskButton();
+
+    // Add each task from the selected project to the DOM
+    showTasksInProject(selectedProject);
+
+    // Add all tasks on click of 'All' filter
+  } else if (filterButton.classList.contains('filter-all')) {
+    const allTasks = getAllTasks();
+    clearTasks();
+
+    for (let i = 0; i < allTasks.length; i += 1) {
+      addTaskToAllFilter(allTasks[i]);
+    }
+    hideAddTaskButton();
+    selectedProject = '';
+  } else {
+    clearTasks();
   }
-
-  // Make the found project the selected project
-  selectedProject = project;
-
-  // Clear tasks from the DOM
-  clearTasks();
-
-  // Add each task from the selected project to the DOM
-  showTasksInProject(selectedProject);
 });
 
 // Click handler to show/hide optional task display
