@@ -915,3 +915,8 @@ export function showEditTaskForm(taskToEdit, onsubmit, onCancel) {
     componentEditTaskInputForm(taskToEdit, onsubmit, onCancel)
   );
 }
+
+export function showNewProjectTaskList() {
+  closeAddTaskForm();
+  showTasksSection();
+}

@@ -67,24 +67,24 @@ function createTask() {
 // This is a conditional that determines if you're looking at the task list or the task form.
 // If you're in the task list on click, then show the task form.
 // If you're in the task form on submit, then show the task list.
-function controllDisplay(comingFrom) {
+function controlDisplay(comingFrom) {
   if (comingFrom === 'task list') {
     showAddTaskForm(
       (e) => {
         e.preventDefault();
         createTask();
-        controllDisplay('task form');
+        controlDisplay('task form');
       },
       (e) => {
         e.preventDefault();
-        controllDisplay('task form');
+        controlDisplay('task form');
       }
     );
   } else if (comingFrom === 'task form') {
     closeAddTaskForm();
     showTasksSection((e) => {
       e.preventDefault();
-      controllDisplay('task list');
+      controlDisplay('task list');
     });
     showTasksInProject(selectedProject);
   }
@@ -92,7 +92,7 @@ function controllDisplay(comingFrom) {
 
 function onClickOfAddTaskButton(e) {
   e.preventDefault();
-  controllDisplay('task list');
+  controlDisplay('task list');
 }
 
 init(onClickOfAddTaskButton);
@@ -132,6 +132,11 @@ projectForm.addEventListener('keypress', (e) => {
 
     // Change x to + for add-project icon
     rotateAddProjectIcon();
+
+    selectedProject = newProject;
+
+    // Control display as if coming from task form (wipes current display and opens new project task listing)
+    controlDisplay('task form');
   }
 });
 
@@ -231,6 +236,6 @@ taskList.addEventListener('submit', (e) => {
 
     // Replace old task information with new task information in the tasks array
     selectedProject.tasks.splice(index, 1, updatedTask);
-    controllDisplay('task form');
+    controlDisplay('task form');
   }
 });
