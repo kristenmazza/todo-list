@@ -421,13 +421,20 @@ function componentFormTaskBackButton(onCancel) {
 }
 
 // Get task information from Add Task form
-export function getTaskInformation() {
+export function getTaskInformation(selectedProject) {
   const taskTitle = document.getElementById('task-name').value;
   const taskDescription = document.getElementById('task-description').value;
   const taskDate = document.getElementById('due-date').value;
   const taskPriority = document.getElementById('priority').value;
+  const project = selectedProject;
 
-  const task = new Task(taskTitle, taskDescription, taskDate, taskPriority);
+  const task = new Task(
+    taskTitle,
+    taskDescription,
+    taskDate,
+    taskPriority,
+    project
+  );
 
   return task;
 }
@@ -907,14 +914,4 @@ export function showEditTaskForm(taskToEdit, onsubmit, onCancel) {
   tasksContainer.replaceChildren(
     componentEditTaskInputForm(taskToEdit, onsubmit, onCancel)
   );
-}
-
-// Update task list with edited task
-export function updateTaskList(e, selectedProject) {
-  e.preventDefault();
-  closeAddTaskForm();
-  showTasksSection();
-  showTasksInProject(selectedProject);
-
-  console.log('clicked button');
 }

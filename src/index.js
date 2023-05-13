@@ -31,7 +31,8 @@ const primaryTasks = [
     'Set personal goals',
     'Determine specific, measurable goals with smaller milestones for next year',
     '2023-12-31',
-    'low'
+    'low',
+    'Home'
   ),
 ];
 
@@ -45,7 +46,8 @@ const taskTwo = new Task(
   'Meal planning',
   'Plan meals for next week',
   '2023-05-25',
-  'high'
+  'high',
+  'Home'
 );
 
 primaryProject.addTask(taskTwo);
@@ -56,7 +58,7 @@ let taskToEdit = '';
 let taskId = '';
 
 function createTask() {
-  const task = getTaskInformation();
+  const task = getTaskInformation(selectedProject);
 
   // Add task to the selected project's array of tasks
   selectedProject.addTask(task);
@@ -205,15 +207,18 @@ taskList.addEventListener('click', (e) => {
   } else if (e.target.classList.contains('trash-icon')) {
     deleteTask(e, selectedProject);
   } else if (e.target.classList.contains('edit-icon')) {
-    taskId = selectedProject.tasks.findIndex(
-      (task) => task.id.toString() === e.target.getAttribute('edit-id')
-    );
-
+    taskId = e.target.getAttribute('edit-id');
     const tasksInProject = selectedProject.tasks;
 
-    taskToEdit = tasksInProject.find((t) => t.id === taskId);
-    console.log(taskToEdit);
+    taskToEdit = tasksInProject.find((t) => t.id.toString() === taskId);
 
+    console.log(`selected proj`);
+    console.log(selectedProject);
+    console.log('tasks in proj');
+    console.log(tasksInProject);
+    console.log('task Id');
+    console.log(taskId);
+    console.log(taskToEdit);
     showEditTaskForm(taskToEdit);
   }
 });
