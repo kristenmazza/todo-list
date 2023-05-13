@@ -19,13 +19,19 @@ import {
   hideAddTaskButton,
   showAddTaskButton,
   addTaskToAllFilter,
+  editTask,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
 import { getProjects, addProject, getAllTasks } from './site-storage';
 
 const primaryTasks = [
-  new Task('Respond to emails', 'Catch up on personal emails', '3/4/2023', 1),
+  new Task(
+    'Set personal goals',
+    'Determine specific, measurable goals with smaller milestones for next year',
+    '2023-12-31',
+    'low'
+  ),
 ];
 
 const primaryProject = new Project('Home', primaryTasks);
@@ -37,8 +43,8 @@ addProject(secondaryProject);
 const taskTwo = new Task(
   'Meal planning',
   'Plan meals for next week',
-  '3/4/2023',
-  2
+  '2023-05-25',
+  'high'
 );
 
 primaryProject.addTask(taskTwo);
@@ -195,5 +201,7 @@ taskList.addEventListener('click', (e) => {
     toggleOptionalTaskDisplay(e);
   } else if (e.target.classList.contains('trash-icon')) {
     deleteTask(e, selectedProject);
+  } else if (e.target.classList.contains('edit-icon')) {
+    editTask(e, selectedProject);
   }
 });

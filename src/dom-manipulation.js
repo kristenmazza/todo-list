@@ -232,6 +232,7 @@ function componentEditIcon() {
   const editIcon = new Image();
   editIcon.src = EditIcon;
   editIcon.classList.add('icons');
+  editIcon.classList.add('edit-icon');
   return editIcon;
 }
 
@@ -298,7 +299,7 @@ function componentNavigationGroup() {
 }
 
 // Add Task form priority selection
-function componentTaskPriority() {
+function componentTaskPriority(taskToEdit) {
   const priority = document.createElement('select');
   priority.setAttribute('id', 'priority');
   priority.setAttribute('name', 'priority');
@@ -310,6 +311,10 @@ function componentTaskPriority() {
   OptionTwo.textContent = 'High';
   priority.appendChild(OptionOne);
   priority.appendChild(OptionTwo);
+
+  if (taskToEdit) {
+    priority.value = taskToEdit.priority;
+  }
   return priority;
 }
 
@@ -323,24 +328,34 @@ function componentTaskPriorityLabel() {
 }
 
 // Add Task form task name header and input
-function componentFormTaskName() {
+function componentFormTaskName(title, taskToEdit) {
   const taskNameGroup = componentTaskItemGroup();
   const taskNameField = document.createElement('input');
-  taskNameGroup.appendChild(componentSectionHeader('Add Task'));
+  taskNameGroup.appendChild(componentSectionHeader(title));
   taskNameGroup.appendChild(taskNameField);
   taskNameField.setAttribute('name', 'task-name');
   taskNameField.setAttribute('id', 'task-name');
   taskNameField.setAttribute('type', 'text');
   taskNameField.classList.add('task-name-field');
+
+  if (taskToEdit) {
+    taskNameField.value = taskToEdit.title;
+  }
+
   return taskNameGroup;
 }
 
 // Add Task form description input field
-function componentFormTaskDescription() {
+function componentFormTaskDescription(taskToEdit) {
   const taskDescriptionField = document.createElement('textarea');
   taskDescriptionField.setAttribute('name', 'task-description');
   taskDescriptionField.setAttribute('id', 'task-description');
   taskDescriptionField.classList.add('task-description-field');
+
+  if (taskToEdit) {
+    taskDescriptionField.value = taskToEdit.description;
+  }
+
   return taskDescriptionField;
 }
 
@@ -354,13 +369,18 @@ function componentFormTaskDescriptionLabel() {
 }
 
 // Add Task form due date input
-function componentFormTaskDueDate() {
+function componentFormTaskDueDate(taskToEdit) {
   const taskDueDateField = document.createElement('input');
   taskDueDateField.setAttribute('name', 'due-date');
   taskDueDateField.setAttribute('id', 'due-date');
   taskDueDateField.setAttribute('type', 'date');
   taskDueDateField.classList.add('due-date-field');
   taskDueDateField.required = true;
+
+  if (taskToEdit) {
+    taskDueDateField.value = taskToEdit.dueDate;
+  }
+
   return taskDueDateField;
 }
 
@@ -379,6 +399,15 @@ function componentFormTaskSubmit() {
   taskSubmit.setAttribute('type', 'submit');
   taskSubmit.setAttribute('id', 'task-submit');
   taskSubmit.textContent = 'ADD';
+  return taskSubmit;
+}
+
+// Edit Task form submit button
+function componentEditTaskSubmit() {
+  const taskSubmit = document.createElement('button');
+  taskSubmit.setAttribute('type', 'submit');
+  taskSubmit.setAttribute('id', 'task-submit');
+  taskSubmit.textContent = 'EDIT';
   return taskSubmit;
 }
 
@@ -422,7 +451,7 @@ export function componentTaskInputForm(onsubmit, onCancel) {
 
   // Append task name input and header
   taskFormGroup.appendChild(taskNameGroup);
-  taskNameGroup.appendChild(componentFormTaskName());
+  taskNameGroup.appendChild(componentFormTaskName('Add Task'));
 
   // Append task description input and label
   taskFormGroup.appendChild(descriptionGroup);
@@ -448,6 +477,54 @@ export function componentTaskInputForm(onsubmit, onCancel) {
   return taskForm;
 }
 
+// Edit task input form
+export function componentEditTaskInputForm(onsubmit, onCancel, taskToEdit) {
+  const taskForm = document.createElement('form');
+  const taskFormGroup = componentTaskFormGroup();
+  const taskNameGroup = componentTaskItemGroup();
+  const descriptionGroup = componentTaskItemGroup();
+  const inputGroup = componentInputGroup();
+  const taskDueDateGroup = componentTaskItemGroup();
+  const taskPriorityGroup = componentTaskItemGroup();
+  const navigationGroup = componentNavigationGroup();
+
+  taskForm.classList.add('task-form');
+  taskForm.setAttribute('id', 'task-form');
+  taskForm.appendChild(taskFormGroup);
+
+  taskForm.onsubmit = onsubmit;
+
+  // Append task name input and header
+  taskFormGroup.appendChild(taskNameGroup);
+  taskNameGroup.appendChild(componentFormTaskName('Edit Task', taskToEdit));
+
+  // Append task description input and label
+  taskFormGroup.appendChild(descriptionGroup);
+  descriptionGroup.appendChild(componentFormTaskDescriptionLabel());
+  descriptionGroup.appendChild(componentFormTaskDescription(taskToEdit));
+
+  // Add task due date input and label
+  taskFormGroup.appendChild(inputGroup);
+  inputGroup.appendChild(taskDueDateGroup);
+  taskDueDateGroup.appendChild(componentFormTaskDueDateLabel());
+  taskDueDateGroup.appendChild(componentFormTaskDueDate(taskToEdit));
+
+  // Add task priority selection and label
+  inputGroup.appendChild(taskPriorityGroup);
+  taskPriorityGroup.appendChild(componentTaskPriorityLabel());
+  taskPriorityGroup.appendChild(componentTaskPriority(taskToEdit));
+
+  // Add navigation (back button and submit form button)
+  taskForm.appendChild(navigationGroup);
+  navigationGroup.appendChild(componentFormTaskBackButton(onCancel));
+  navigationGroup.appendChild(componentEditTaskSubmit());
+
+  // when submitted, save new task information, update existing task with that information in DOM and in array
+
+  return taskForm;
+}
+
+// Display all the tasks within "All" filter
 function displayTaskInAllFilter(
   taskName,
   taskDescription,
@@ -804,6 +881,7 @@ export function toggleOptionalTaskDisplay(e) {
   }
 }
 
+// Delete task
 export function deleteTask(e, selectedProject) {
   e.target.parentElement.parentElement.parentElement.remove();
 
@@ -811,4 +889,20 @@ export function deleteTask(e, selectedProject) {
     (task) => task.id.toString() === e.target.getAttribute('del-id')
   );
   selectedProject.tasks.splice(taskToDelete, 1);
+}
+
+// Edit task
+export function editTask(e, selectedProject, onsubmit, onCancel) {
+  const tasksContainer = document.querySelector('.tasks-card');
+
+  const taskId = selectedProject.tasks.findIndex(
+    (task) => task.id.toString() === e.target.getAttribute('edit-id')
+  );
+
+  const tasksInProject = selectedProject.tasks;
+  const taskToEdit = tasksInProject.find((t) => t.id === taskId);
+
+  tasksContainer.replaceChildren(
+    componentEditTaskInputForm(onsubmit, onCancel, taskToEdit)
+  );
 }
