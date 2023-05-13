@@ -212,13 +212,6 @@ taskList.addEventListener('click', (e) => {
 
     taskToEdit = tasksInProject.find((t) => t.id.toString() === taskId);
 
-    console.log(`selected proj`);
-    console.log(selectedProject);
-    console.log('tasks in proj');
-    console.log(tasksInProject);
-    console.log('task Id');
-    console.log(taskId);
-    console.log(taskToEdit);
     showEditTaskForm(taskToEdit);
   }
 });
@@ -227,9 +220,17 @@ taskList.addEventListener('click', (e) => {
 taskList.addEventListener('submit', (e) => {
   if (e.target.classList.contains('edit-task-form')) {
     e.preventDefault();
+
+    // Update task information in the DOM
     const updatedTask = updateTaskInformation(taskToEdit);
-    selectedProject.tasks.splice(taskId, 1, updatedTask);
+
+    // Find the index of the edited task in the tasks array
+    const index = selectedProject.tasks.findIndex(
+      (item) => item.id.toString() === taskId
+    );
+
+    // Replace old task information with new task information in the tasks array
+    selectedProject.tasks.splice(index, 1, updatedTask);
     controllDisplay('task form');
-    console.log(selectedProject.tasks);
   }
 });
