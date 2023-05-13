@@ -29,7 +29,7 @@ const primaryTasks = [
   new Task(
     'Set personal goals',
     'Determine SMART goals with objectives',
-    new Date(new Date().getFullYear(), 11, 31),
+    '2023-12-31',
     'low',
     'Home'
   ),

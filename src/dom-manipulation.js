@@ -551,7 +551,8 @@ function displayTaskInAllFilter(
   taskDescription,
   taskDueDate,
   taskPriority,
-  taskId
+  taskId,
+  taskCompletion
 ) {
   const task = componentTask();
   const taskInfo = componentTaskInfo();
@@ -565,11 +566,14 @@ function displayTaskInAllFilter(
   const expandedTaskInfoCellDueDate = componentExpandedTaskInfoCell();
   const expandedTaskInfoCellPriority = componentExpandedTaskInfoCell();
   const checkboxLabel = componentCheckboxLabel(taskName);
+  const checkboxField = componentCheckboxField();
+
+  checkboxField.checked = taskCompletion;
 
   task.appendChild(permanentTaskDisplay);
   permanentTaskDisplay.appendChild(taskInfo);
   taskInfo.appendChild(checkbox);
-  checkbox.appendChild(componentCheckboxField());
+  checkbox.appendChild(checkboxField);
   checkbox.appendChild(checkboxLabel);
   task.appendChild(optionalTaskDisplay);
 
@@ -621,7 +625,8 @@ function displayTask(
   taskDescription,
   taskDueDate,
   taskPriority,
-  taskId
+  taskId,
+  taskCompletion
 ) {
   const task = componentTask();
   const taskInfo = componentTaskInfo();
@@ -636,15 +641,18 @@ function displayTask(
   const expandedTaskInfoCellDueDate = componentExpandedTaskInfoCell();
   const expandedTaskInfoCellPriority = componentExpandedTaskInfoCell();
   const checkboxLabel = componentCheckboxLabel(taskName);
+  const checkboxField = componentCheckboxField();
   const editIcon = componentEditIcon();
   const trashIcon = componentTrashIcon();
+
+  checkboxField.checked = taskCompletion;
 
   task.appendChild(permanentTaskDisplay);
   permanentTaskDisplay.appendChild(taskInfo);
   taskInfo.appendChild(checkbox);
-  checkbox.appendChild(componentCheckboxField());
+  checkbox.appendChild(checkboxField);
+
   checkbox.appendChild(checkboxLabel);
-  // checkbox.onchange = onChangeOfClickbox();
 
   permanentTaskDisplay.appendChild(editTools);
   editTools.appendChild(editIcon);
@@ -771,7 +779,8 @@ export function addTaskToDom(task) {
       task.description,
       task.dueDate,
       task.priority,
-      task.id
+      task.id,
+      task.completion
     )
   );
 }
@@ -784,7 +793,8 @@ export function addTaskToAllFilter(task) {
       task.description,
       task.dueDate,
       task.priority,
-      task.id
+      task.id,
+      task.completion
     )
   );
 }
