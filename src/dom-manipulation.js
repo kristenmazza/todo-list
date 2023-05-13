@@ -402,11 +402,11 @@ function componentFormTaskSubmit() {
   return taskSubmit;
 }
 
-// Edit Task form submit button
+// Edit task form submit button
 function componentEditTaskSubmit() {
   const taskSubmit = document.createElement('button');
   taskSubmit.setAttribute('type', 'submit');
-  taskSubmit.setAttribute('id', 'task-submit');
+  taskSubmit.setAttribute('id', 'edit-task-submit');
   taskSubmit.textContent = 'EDIT';
   return taskSubmit;
 }
@@ -430,6 +430,17 @@ export function getTaskInformation() {
   const task = new Task(taskTitle, taskDescription, taskDate, taskPriority);
 
   return task;
+}
+
+// Update task information after editing task
+export function updateTaskInformation(taskToEdit) {
+  const updatedTask = taskToEdit;
+  updatedTask.title = document.getElementById('task-name').value;
+  updatedTask.description = document.getElementById('task-description').value;
+  updatedTask.dueDate = document.getElementById('due-date').value;
+  updatedTask.priority = document.getElementById('priority').value;
+
+  return updatedTask;
 }
 
 // Full Add Task input form
@@ -478,7 +489,7 @@ export function componentTaskInputForm(onsubmit, onCancel) {
 }
 
 // Edit task input form
-export function componentEditTaskInputForm(onsubmit, onCancel, taskToEdit) {
+export function componentEditTaskInputForm(taskToEdit) {
   const taskForm = document.createElement('form');
   const taskFormGroup = componentTaskFormGroup();
   const taskNameGroup = componentTaskItemGroup();
@@ -488,11 +499,9 @@ export function componentEditTaskInputForm(onsubmit, onCancel, taskToEdit) {
   const taskPriorityGroup = componentTaskItemGroup();
   const navigationGroup = componentNavigationGroup();
 
-  taskForm.classList.add('task-form');
-  taskForm.setAttribute('id', 'task-form');
+  taskForm.classList.add('edit-task-form');
+  taskForm.setAttribute('id', 'edit-task-form');
   taskForm.appendChild(taskFormGroup);
-
-  taskForm.onsubmit = onsubmit;
 
   // Append task name input and header
   taskFormGroup.appendChild(taskNameGroup);
@@ -516,7 +525,7 @@ export function componentEditTaskInputForm(onsubmit, onCancel, taskToEdit) {
 
   // Add navigation (back button and submit form button)
   taskForm.appendChild(navigationGroup);
-  navigationGroup.appendChild(componentFormTaskBackButton(onCancel));
+  // navigationGroup.appendChild(componentFormTaskBackButton(onCancel));
   navigationGroup.appendChild(componentEditTaskSubmit());
 
   // when submitted, save new task information, update existing task with that information in DOM and in array
@@ -891,18 +900,21 @@ export function deleteTask(e, selectedProject) {
   selectedProject.tasks.splice(taskToDelete, 1);
 }
 
-// Edit task
-export function editTask(e, selectedProject, onsubmit, onCancel) {
+// Edit task form for selected task
+export function showEditTaskForm(taskToEdit, onsubmit, onCancel) {
   const tasksContainer = document.querySelector('.tasks-card');
 
-  const taskId = selectedProject.tasks.findIndex(
-    (task) => task.id.toString() === e.target.getAttribute('edit-id')
-  );
-
-  const tasksInProject = selectedProject.tasks;
-  const taskToEdit = tasksInProject.find((t) => t.id === taskId);
-
   tasksContainer.replaceChildren(
-    componentEditTaskInputForm(onsubmit, onCancel, taskToEdit)
+    componentEditTaskInputForm(taskToEdit, onsubmit, onCancel)
   );
+}
+
+// Update task list with edited task
+export function updateTaskList(e, selectedProject) {
+  e.preventDefault();
+  closeAddTaskForm();
+  showTasksSection();
+  showTasksInProject(selectedProject);
+
+  console.log('clicked button');
 }

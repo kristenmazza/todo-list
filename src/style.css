@@ -245,6 +245,7 @@ input[type='checkbox']:checked + label {
 }
 
 .add-task-button,
+#edit-task-submit,
 #task-submit {
   width: 130px;
   border: none;
@@ -275,7 +276,8 @@ input[type='checkbox']:checked + label {
   text-decoration: none;
 }
 
-.task-form {
+.task-form,
+.edit-task-form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

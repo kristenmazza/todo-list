@@ -19,7 +19,8 @@ import {
   hideAddTaskButton,
   showAddTaskButton,
   addTaskToAllFilter,
-  editTask,
+  showEditTaskForm,
+  updateTaskInformation,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -51,6 +52,8 @@ primaryProject.addTask(taskTwo);
 console.log(getProjects());
 
 let selectedProject = getProjects()[0];
+let taskToEdit = '';
+let taskId = '';
 
 function createTask() {
   const task = getTaskInformation();
@@ -194,7 +197,7 @@ sidebar.addEventListener('click', (e) => {
   }
 });
 
-// Click handler to show/hide optional task display
+// Click handler to show/hide optional task display, delete, and edit tasks
 const taskList = document.querySelector('.tasks-card');
 taskList.addEventListener('click', (e) => {
   if (e.target.classList.contains('checkbox-label')) {
@@ -202,6 +205,26 @@ taskList.addEventListener('click', (e) => {
   } else if (e.target.classList.contains('trash-icon')) {
     deleteTask(e, selectedProject);
   } else if (e.target.classList.contains('edit-icon')) {
-    editTask(e, selectedProject);
+    taskId = selectedProject.tasks.findIndex(
+      (task) => task.id.toString() === e.target.getAttribute('edit-id')
+    );
+
+    const tasksInProject = selectedProject.tasks;
+
+    taskToEdit = tasksInProject.find((t) => t.id === taskId);
+    console.log(taskToEdit);
+
+    showEditTaskForm(taskToEdit);
+  }
+});
+
+// Event listener for submission of 'edit task' form
+taskList.addEventListener('submit', (e) => {
+  if (e.target.classList.contains('edit-task-form')) {
+    e.preventDefault();
+    const updatedTask = updateTaskInformation(taskToEdit);
+    selectedProject.tasks.splice(taskId, 1, updatedTask);
+    controllDisplay('task form');
+    console.log(selectedProject.tasks);
   }
 });
