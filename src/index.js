@@ -7,11 +7,9 @@ import {
   rotateAddProjectIcon,
   removeActiveClass,
   toggleSidebarHighlight,
-  clearTasks,
   showDefaultProject,
   showTasksInProject,
   getTaskInformation,
-  closeAddTaskForm,
   showTasksSection,
   showAddTaskForm,
   toggleOptionalTaskDisplay,
@@ -21,6 +19,7 @@ import {
   addTaskToAllFilter,
   showEditTaskForm,
   updateTaskInformation,
+  clearAllTaskContent,
 } from './dom-manipulation';
 import Task from './task';
 import Project from './project';
@@ -81,7 +80,7 @@ function controlDisplay(comingFrom) {
       }
     );
   } else if (comingFrom === 'task form') {
-    closeAddTaskForm();
+    clearAllTaskContent();
     showTasksSection((e) => {
       e.preventDefault();
       controlDisplay('task list');
@@ -181,18 +180,27 @@ sidebar.addEventListener('click', (e) => {
     // Make the found project the selected project
     selectedProject = project;
 
-    // Clear tasks from the DOM
-    clearTasks();
+    // Clear task content from the DOM
+    clearAllTaskContent();
 
+    // Show the tasks section of the selected project
+    showTasksSection(onClickOfAddTaskButton);
+
+    // Show the add task button
     showAddTaskButton();
 
-    // Add each task from the selected project to the DOM
+    // // Add each task from the selected project to the DOM
     showTasksInProject(selectedProject);
 
     // Add all tasks on click of 'All' filter
   } else if (filterButton.classList.contains('filter-all')) {
     const allTasks = getAllTasks();
-    clearTasks();
+
+    // Clear task content from the DOM
+    clearAllTaskContent();
+
+    // Show the tasks section of the selected project
+    showTasksSection(onClickOfAddTaskButton);
 
     for (let i = 0; i < allTasks.length; i += 1) {
       addTaskToAllFilter(allTasks[i]);
@@ -200,7 +208,8 @@ sidebar.addEventListener('click', (e) => {
     hideAddTaskButton();
     selectedProject = '';
   } else {
-    clearTasks();
+    // Clear task content from the DOM (for other filters)
+    clearAllTaskContent();
   }
 });
 
@@ -218,6 +227,12 @@ taskList.addEventListener('click', (e) => {
     taskToEdit = tasksInProject.find((t) => t.id.toString() === taskId);
 
     showEditTaskForm(taskToEdit);
+  } else if (e.target.classList.contains('cancel-edit')) {
+    // Clear task content from the DOM
+    // Show the tasks section and tasks of the selected project
+    clearAllTaskContent();
+    showTasksSection(onClickOfAddTaskButton);
+    showTasksInProject(selectedProject);
   }
 });
 

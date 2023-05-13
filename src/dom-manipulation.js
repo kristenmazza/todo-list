@@ -420,6 +420,13 @@ function componentFormTaskBackButton(onCancel) {
   return backIcon;
 }
 
+// Edit Task form back button
+function componentEditTaskBackButton() {
+  const backIcon = new Image();
+  backIcon.src = LeftSolid;
+  backIcon.classList.add('icons', 'back-icon', 'cancel-edit');
+  return backIcon;
+}
 // Get task information from Add Task form
 export function getTaskInformation(selectedProject) {
   const taskTitle = document.getElementById('task-name').value;
@@ -532,7 +539,7 @@ export function componentEditTaskInputForm(taskToEdit) {
 
   // Add navigation (back button and submit form button)
   taskForm.appendChild(navigationGroup);
-  // navigationGroup.appendChild(componentFormTaskBackButton(onCancel));
+  navigationGroup.appendChild(componentEditTaskBackButton());
   navigationGroup.appendChild(componentEditTaskSubmit());
 
   // when submitted, save new task information, update existing task with that information in DOM and in array
@@ -694,6 +701,7 @@ export function showAddTaskForm(onsubmit, onCancel) {
   tasksContainer.replaceChildren(componentTaskInputForm(onsubmit, onCancel));
 }
 
+// "Add Task" button to open task form
 function componentAddTaskButton(onClickOfAddTaskButton) {
   const addTaskButton = document.createElement('button');
   addTaskButton.classList.add('add-task-button');
@@ -853,14 +861,6 @@ export function showDefaultProject(selectedProject) {
   document.querySelector('[data-id="1"]').classList.add('active');
 }
 
-// Clear tasks from the DOM
-export function clearTasks() {
-  const tasks = document.querySelector('.tasks');
-  while (tasks.children.length > 1) {
-    tasks.removeChild(tasks.lastChild);
-  }
-}
-
 export function hideAddTaskButton() {
   const addTaskButton = document.querySelector('.add-task-button');
   addTaskButton.style.display = 'none';
@@ -871,8 +871,8 @@ export function showAddTaskButton() {
   addTaskButton.style.display = '';
 }
 
-// Remove Add Task form
-export function closeAddTaskForm() {
+// Remove task form or task list
+export function clearAllTaskContent() {
   const tasksCard = document.querySelector('.tasks-card');
   while (tasksCard.children.length > 0) {
     tasksCard.removeChild(tasksCard.lastChild);
@@ -914,9 +914,4 @@ export function showEditTaskForm(taskToEdit, onsubmit, onCancel) {
   tasksContainer.replaceChildren(
     componentEditTaskInputForm(taskToEdit, onsubmit, onCancel)
   );
-}
-
-export function showNewProjectTaskList() {
-  closeAddTaskForm();
-  showTasksSection();
 }
