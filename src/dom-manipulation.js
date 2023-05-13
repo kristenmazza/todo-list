@@ -542,8 +542,6 @@ export function componentEditTaskInputForm(taskToEdit) {
   navigationGroup.appendChild(componentEditTaskBackButton());
   navigationGroup.appendChild(componentEditTaskSubmit());
 
-  // when submitted, save new task information, update existing task with that information in DOM and in array
-
   return taskForm;
 }
 
@@ -646,6 +644,8 @@ function displayTask(
   taskInfo.appendChild(checkbox);
   checkbox.appendChild(componentCheckboxField());
   checkbox.appendChild(checkboxLabel);
+  // checkbox.onchange = onChangeOfClickbox();
+
   permanentTaskDisplay.appendChild(editTools);
   editTools.appendChild(editIcon);
   editTools.appendChild(trashIcon);

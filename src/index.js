@@ -28,29 +28,35 @@ import { getProjects, addProject, getAllTasks } from './site-storage';
 const primaryTasks = [
   new Task(
     'Set personal goals',
-    'Determine specific, measurable goals with smaller milestones for next year',
-    '2023-12-31',
+    'Determine SMART goals with objectives',
+    new Date(new Date().getFullYear(), 11, 31),
     'low',
+    'Home'
+  ),
+  new Task(
+    'Meal planning',
+    'Plan meals for next week',
+    '2023-05-25',
+    'high',
     'Home'
   ),
 ];
 
+const secondaryTasks = [
+  new Task(
+    'Prepare for meeting',
+    'Review & print documents for distribution',
+    new Date().toISOString().slice(0, 10),
+    'high',
+    'Work'
+  ),
+];
+
 const primaryProject = new Project('Home', primaryTasks);
-const secondaryProject = new Project('Work');
+const secondaryProject = new Project('Work', secondaryTasks);
 
 addProject(primaryProject);
 addProject(secondaryProject);
-
-const taskTwo = new Task(
-  'Meal planning',
-  'Plan meals for next week',
-  '2023-05-25',
-  'high',
-  'Home'
-);
-
-primaryProject.addTask(taskTwo);
-console.log(getProjects());
 
 let selectedProject = getProjects()[0];
 let taskToEdit = '';
@@ -252,5 +258,19 @@ taskList.addEventListener('submit', (e) => {
     // Replace old task information with new task information in the tasks array
     selectedProject.tasks.splice(index, 1, updatedTask);
     controlDisplay('task form');
+  }
+});
+
+// Change task completion status on checkbox change
+taskList.addEventListener('change', (e) => {
+  taskId = parseInt(e.target.nextElementSibling.getAttribute('data-id'), 10);
+  const allTasks = getAllTasks();
+  const taskChanged = allTasks.find((task) => task.id === taskId);
+  if (e.target.checked) {
+    taskChanged.completion = true;
+    console.log(taskChanged);
+  } else {
+    taskChanged.completion = false;
+    console.log(taskChanged);
   }
 });
