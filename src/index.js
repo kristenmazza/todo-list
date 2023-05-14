@@ -198,6 +198,8 @@ taskList.addEventListener('click', (e) => {
     toggleOptionalTaskDisplay(e);
   } else if (e.target.classList.contains('trash-icon')) {
     deleteTask(e, selectedProject);
+    // Update projects/tasks in local storage
+    addAllProjectsToLocalStorage();
   } else if (e.target.classList.contains('edit-icon')) {
     taskId = e.target.getAttribute('edit-id');
     const tasksInProject = selectedProject.tasks;
