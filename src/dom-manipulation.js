@@ -920,10 +920,8 @@ export function deleteTask(e, selectedProject) {
 }
 
 // Edit task form for selected task
-export function showEditTaskForm(taskToEdit, onsubmit, onCancel) {
+export function showEditTaskForm(taskToEdit) {
   const tasksContainer = document.querySelector('.tasks-card');
 
-  tasksContainer.replaceChildren(
-    componentEditTaskInputForm(taskToEdit, onsubmit, onCancel)
-  );
+  tasksContainer.replaceChildren(componentEditTaskInputForm(taskToEdit));
 }

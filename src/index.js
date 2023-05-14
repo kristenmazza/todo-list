@@ -28,6 +28,7 @@ import {
   getAllTasks,
   setCompletion,
   addTask,
+  addAllProjectsToLocalStorage,
 } from './site-storage';
 
 let selectedProject = getProjects()[0];
@@ -140,7 +141,7 @@ sidebar.addEventListener('click', (e) => {
   toggleSidebarHighlight(e.target);
 
   if (projectButton) {
-    // Save the data-id of the project button as the project id
+    // Assign the data-id of the project button to projectId
     const projectId = projectButton.getAttribute('data-id');
 
     // Save the getProjects() array into projects
@@ -155,7 +156,6 @@ sidebar.addEventListener('click', (e) => {
       return;
     }
 
-    // Make the found project the selected project
     selectedProject = project;
 
     // Clear task content from the DOM
@@ -230,6 +230,9 @@ taskList.addEventListener('submit', (e) => {
     // Replace old task information with new task information in the tasks array
     selectedProject.tasks.splice(index, 1, updatedTask);
     controlDisplay('task form');
+
+    // Update projects/tasks in local storage
+    addAllProjectsToLocalStorage();
   }
 });
 
@@ -249,4 +252,7 @@ taskList.addEventListener('change', (e) => {
     setCompletion(taskChanged, false);
     console.log(taskChanged);
   }
+
+  // Update projects/tasks in local storage
+  addAllProjectsToLocalStorage();
 });
