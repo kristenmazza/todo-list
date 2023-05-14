@@ -3,7 +3,6 @@ import startOfWeek from 'date-fns/startOfWeek';
 import endOfWeek from 'date-fns/endOfWeek';
 import startOfDay from 'date-fns/startOfDay';
 import endOfDay from 'date-fns/endOfDay';
-import parseISO from 'date-fns/parseISO';
 import {
   init,
   addProjectToDOM,
@@ -196,7 +195,7 @@ sidebar.addEventListener('click', (e) => {
 
     for (let i = 0; i < allTasks.length; i += 1) {
       if (
-        isWithinInterval(parseISO(allTasks[i].dueDate), {
+        isWithinInterval(allTasks[i].dueDate, {
           start: startOfWeek(current),
           end: endOfWeek(current),
         })
@@ -213,7 +212,7 @@ sidebar.addEventListener('click', (e) => {
 
     for (let i = 0; i < allTasks.length; i += 1) {
       if (
-        isWithinInterval(parseISO(allTasks[i].dueDate), {
+        isWithinInterval(allTasks[i].dueDate, {
           start: startOfDay(current),
           end: endOfDay(current),
         })

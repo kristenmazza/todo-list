@@ -1,6 +1,5 @@
 import './style.css';
 import format from 'date-fns/format';
-import parseISO from 'date-fns/parseISO';
 import InboxIcon from './images/inbox-solid.svg';
 import CalendarDayIcon from './images/calendar-day-solid.svg';
 import CalendarWeekIcon from './images/calendar-week-solid.svg';
@@ -376,7 +375,7 @@ function componentFormTaskDueDate(taskToEdit) {
   taskDueDateField.required = true;
 
   if (taskToEdit) {
-    taskDueDateField.value = taskToEdit.dueDate;
+    taskDueDateField.value = format(taskToEdit.dueDate, 'yyyy-MM-dd');
   }
 
   return taskDueDateField;
@@ -585,12 +584,7 @@ function displayTaskInFilter(
   );
 
   expandedTaskInfoCellDueDate.appendChild(
-    componentExpandedTaskSpan(
-      format(
-        parseISO(new Date(taskDueDate).toISOString()),
-        'eeee, MMMM dd, yyyy'
-      )
-    )
+    componentExpandedTaskSpan(format(taskDueDate, 'eeee, MMMM dd, yyyy'))
   );
 
   optionalTaskDisplay.appendChild(expandedTaskInfoColumn2);
@@ -672,12 +666,7 @@ function displayTask(
   );
 
   expandedTaskInfoCellDueDate.appendChild(
-    componentExpandedTaskSpan(
-      format(
-        parseISO(new Date(taskDueDate).toISOString()),
-        'eeee, MMMM dd, yyyy'
-      )
-    )
+    componentExpandedTaskSpan(format(taskDueDate, 'eeee, MMMM dd, yyyy'))
   );
 
   optionalTaskDisplay.appendChild(expandedTaskInfoColumn2);
@@ -785,20 +774,6 @@ export function addTaskToDom(task) {
 }
 
 export function addTaskToFilter(task) {
-  const tasks = document.querySelector('.tasks');
-  tasks.appendChild(
-    displayTaskInFilter(
-      task.title,
-      task.description,
-      task.dueDate,
-      task.priority,
-      task.id,
-      task.completion
-    )
-  );
-}
-
-export function addTaskToWeekFilter(task) {
   const tasks = document.querySelector('.tasks');
   tasks.appendChild(
     displayTaskInFilter(

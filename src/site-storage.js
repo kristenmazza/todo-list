@@ -32,10 +32,17 @@ function storageAvailable(type) {
 }
 
 export function getAllProjectsFromLocalStorage() {
+  let projects = [];
   if (storageAvailable('localStorage')) {
-    return JSON.parse(localStorage.getItem('projects'));
+    projects = JSON.parse(localStorage.getItem('projects')) || [];
   }
-  return [];
+
+  projects.forEach((project) => {
+    project.tasks.forEach((task) => {
+      task.dueDate = new Date(task.dueDate);
+    });
+  });
+  return projects;
 }
 
 const projects = getAllProjectsFromLocalStorage() || [];
