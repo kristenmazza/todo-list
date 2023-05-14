@@ -1,3 +1,6 @@
+import endOfWeek from 'date-fns/endOfWeek';
+import endOfYear from 'date-fns/endOfYear';
+import endOfDay from 'date-fns/endOfDay';
 import Project from './project';
 import Task from './task';
 
@@ -43,19 +46,21 @@ export function addAllProjectsToLocalStorage() {
   }
 }
 
+const current = new Date();
+
 if (projects.length === 0) {
   const primaryTasks = [
     new Task(
       'Set personal goals',
-      'Determine SMART goals with objectives',
-      '2023-12-31',
+      'Develop SMART goals with objectives',
+      endOfYear(current),
       'low',
       'Home'
     ),
     new Task(
       'Meal planning',
       'Plan meals for next week',
-      '2023-05-25',
+      endOfWeek(current),
       'high',
       'Home'
     ),
@@ -65,7 +70,7 @@ if (projects.length === 0) {
     new Task(
       'Prepare for meeting',
       'Review & print documents for distribution',
-      new Date().toISOString().slice(0, 10),
+      endOfDay(current),
       'high',
       'Work'
     ),

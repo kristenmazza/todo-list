@@ -1,5 +1,6 @@
 import './style.css';
 import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
 import InboxIcon from './images/inbox-solid.svg';
 import CalendarDayIcon from './images/calendar-day-solid.svg';
 import CalendarWeekIcon from './images/calendar-week-solid.svg';
@@ -59,24 +60,21 @@ function componentFilter() {
 function componentInboxIcon() {
   const inboxIcon = new Image();
   inboxIcon.src = InboxIcon;
-  inboxIcon.classList.add('icons');
-  inboxIcon.classList.add('filter-elements');
+  inboxIcon.classList.add('icons', 'filter-elements');
   return inboxIcon;
 }
 
 function componentTodayIcon() {
   const todayIcon = new Image();
   todayIcon.src = CalendarDayIcon;
-  todayIcon.classList.add('icons');
-  todayIcon.classList.add('filter-elements');
+  todayIcon.classList.add('icons', 'filter-elements');
   return todayIcon;
 }
 
 function componentWeekIcon() {
   const weekIcon = new Image();
   weekIcon.src = CalendarWeekIcon;
-  weekIcon.classList.add('icons');
-  weekIcon.classList.add('filter-elements');
+  weekIcon.classList.add('icons', 'filter-elements');
   return weekIcon;
 }
 
@@ -538,8 +536,8 @@ export function componentEditTaskInputForm(taskToEdit) {
   return taskForm;
 }
 
-// Display all the tasks within "All" filter
-function displayTaskInAllFilter(
+// Display all the tasks within filter
+function displayTaskInFilter(
   taskName,
   taskDescription,
   taskDueDate,
@@ -588,7 +586,10 @@ function displayTaskInAllFilter(
 
   expandedTaskInfoCellDueDate.appendChild(
     componentExpandedTaskSpan(
-      format(new Date(taskDueDate), 'eeee, MMMM dd, yyyy')
+      format(
+        parseISO(new Date(taskDueDate).toISOString()),
+        'eeee, MMMM dd, yyyy'
+      )
     )
   );
 
@@ -672,7 +673,10 @@ function displayTask(
 
   expandedTaskInfoCellDueDate.appendChild(
     componentExpandedTaskSpan(
-      format(new Date(taskDueDate), 'eeee, MMMM dd, yyyy')
+      format(
+        parseISO(new Date(taskDueDate).toISOString()),
+        'eeee, MMMM dd, yyyy'
+      )
     )
   );
 
@@ -749,9 +753,11 @@ export function init(onClickOfAddTaskButton) {
   filters.appendChild(filterToday);
   filterToday.appendChild(componentTodayIcon());
   filterToday.appendChild(componentFilterName('Today'));
+  filterToday.classList.add('filter-today');
   filters.appendChild(filterWeek);
   filterWeek.appendChild(componentWeekIcon());
   filterWeek.appendChild(componentFilterName('Week'));
+  filterWeek.classList.add('filter-week');
   sidebar.appendChild(projects);
   projects.appendChild(projectsHeader);
   projectsHeader.appendChild(componentProjectsHeading());
@@ -778,10 +784,24 @@ export function addTaskToDom(task) {
   );
 }
 
-export function addTaskToAllFilter(task) {
+export function addTaskToFilter(task) {
   const tasks = document.querySelector('.tasks');
   tasks.appendChild(
-    displayTaskInAllFilter(
+    displayTaskInFilter(
+      task.title,
+      task.description,
+      task.dueDate,
+      task.priority,
+      task.id,
+      task.completion
+    )
+  );
+}
+
+export function addTaskToWeekFilter(task) {
+  const tasks = document.querySelector('.tasks');
+  tasks.appendChild(
+    displayTaskInFilter(
       task.title,
       task.description,
       task.dueDate,

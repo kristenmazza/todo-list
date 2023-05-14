@@ -1,3 +1,9 @@
+import isWithinInterval from 'date-fns/isWithinInterval';
+import startOfWeek from 'date-fns/startOfWeek';
+import endOfWeek from 'date-fns/endOfWeek';
+import startOfDay from 'date-fns/startOfDay';
+import endOfDay from 'date-fns/endOfDay';
+import parseISO from 'date-fns/parseISO';
 import {
   init,
   addProjectToDOM,
@@ -16,7 +22,7 @@ import {
   deleteTask,
   hideAddTaskButton,
   showAddTaskButton,
-  addTaskToAllFilter,
+  addTaskToFilter,
   showEditTaskForm,
   updateTaskInformation,
   clearAllTaskContent,
@@ -131,6 +137,8 @@ const sidebar = document.querySelector('#sidebar');
 sidebar.addEventListener('click', (e) => {
   const projectButton = e.target.closest('[data-id]');
   const filterButton = e.target.closest('.filter');
+  const allTasks = getAllTasks();
+  const current = new Date();
 
   // If not clicking a project or filter button, return to prevent errors
   if (!projectButton && !filterButton) {
@@ -169,25 +177,50 @@ sidebar.addEventListener('click', (e) => {
 
     // // Add each task from the selected project to the DOM
     showTasksInProject(selectedProject);
-
-    // Add all tasks on click of 'All' filter
   } else if (filterButton.classList.contains('filter-all')) {
-    const allTasks = getAllTasks();
-
-    // Clear task content from the DOM
+    // Add tasks to filter 'all'
     clearAllTaskContent();
-
-    // Show the tasks section of the selected project
     showTasksSection(onClickOfAddTaskButton);
-
-    for (let i = 0; i < allTasks.length; i += 1) {
-      addTaskToAllFilter(allTasks[i]);
-    }
     hideAddTaskButton();
     selectedProject = '';
-  } else {
-    // Clear task content from the DOM (for other filters)
+
+    for (let i = 0; i < allTasks.length; i += 1) {
+      addTaskToFilter(allTasks[i]);
+    }
+  } else if (filterButton.classList.contains('filter-week')) {
+    // Add tasks to filter 'week'
     clearAllTaskContent();
+    showTasksSection(onClickOfAddTaskButton);
+    hideAddTaskButton();
+    selectedProject = '';
+
+    for (let i = 0; i < allTasks.length; i += 1) {
+      if (
+        isWithinInterval(parseISO(allTasks[i].dueDate), {
+          start: startOfWeek(current),
+          end: endOfWeek(current),
+        })
+      ) {
+        addTaskToFilter(allTasks[i]);
+      }
+    }
+  } else if (filterButton.classList.contains('filter-today')) {
+    // Add tasks to filter 'today'
+    clearAllTaskContent();
+    showTasksSection(onClickOfAddTaskButton);
+    hideAddTaskButton();
+    selectedProject = '';
+
+    for (let i = 0; i < allTasks.length; i += 1) {
+      if (
+        isWithinInterval(parseISO(allTasks[i].dueDate), {
+          start: startOfDay(current),
+          end: endOfDay(current),
+        })
+      ) {
+        addTaskToFilter(allTasks[i]);
+      }
+    }
   }
 });
 
@@ -249,10 +282,8 @@ taskList.addEventListener('change', (e) => {
 
   if (e.target.checked) {
     setCompletion(taskChanged, true);
-    console.log(taskChanged);
   } else {
     setCompletion(taskChanged, false);
-    console.log(taskChanged);
   }
 
   // Update projects/tasks in local storage
