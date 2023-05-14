@@ -1,14 +1,18 @@
-let taskId = 0;
-
 export default class Task {
-  constructor(title, description, dueDate, priority, project, completion) {
+  constructor(
+    title,
+    description,
+    dueDate,
+    priority,
+    project,
+    completion = false
+  ) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
     this.project = project;
     this.completion = completion;
-    this.id = taskId;
-    taskId += 1;
+    this.id = crypto.randomUUID();
   }
 }

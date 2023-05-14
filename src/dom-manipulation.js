@@ -428,20 +428,13 @@ function componentEditTaskBackButton() {
   return backIcon;
 }
 // Get task information from Add Task form
-export function getTaskInformation(selectedProject) {
+export function getTaskInformation() {
   const taskTitle = document.getElementById('task-name').value;
   const taskDescription = document.getElementById('task-description').value;
   const taskDate = document.getElementById('due-date').value;
   const taskPriority = document.getElementById('priority').value;
-  const project = selectedProject;
 
-  const task = new Task(
-    taskTitle,
-    taskDescription,
-    taskDate,
-    taskPriority,
-    project
-  );
+  const task = new Task(taskTitle, taskDescription, taskDate, taskPriority);
 
   return task;
 }
@@ -864,11 +857,17 @@ export function toggleSidebarHighlight(element) {
 
 // Show default project when page is loaded
 export function showDefaultProject(selectedProject) {
+  if (!selectedProject) {
+    return;
+  }
+
   selectedProject.tasks.forEach((task) => {
     addTaskToDom(task);
   });
 
-  document.querySelector('[data-id="1"]').classList.add('active');
+  document
+    .querySelector(`[data-id="${selectedProject.id}"]`)
+    .classList.add('active');
 }
 
 export function hideAddTaskButton() {
@@ -891,6 +890,9 @@ export function clearAllTaskContent() {
 
 // Show all tasks in a selected project
 export function showTasksInProject(selection) {
+  if (!selection || !selection.tasks) {
+    return;
+  }
   selection.tasks.forEach((task) => {
     addTaskToDom(task);
   });

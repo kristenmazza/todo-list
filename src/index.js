@@ -21,42 +21,14 @@ import {
   updateTaskInformation,
   clearAllTaskContent,
 } from './dom-manipulation';
-import Task from './task';
 import Project from './project';
-import { getProjects, addProject, getAllTasks } from './site-storage';
-
-const primaryTasks = [
-  new Task(
-    'Set personal goals',
-    'Determine SMART goals with objectives',
-    '2023-12-31',
-    'low',
-    'Home'
-  ),
-  new Task(
-    'Meal planning',
-    'Plan meals for next week',
-    '2023-05-25',
-    'high',
-    'Home'
-  ),
-];
-
-const secondaryTasks = [
-  new Task(
-    'Prepare for meeting',
-    'Review & print documents for distribution',
-    new Date().toISOString().slice(0, 10),
-    'high',
-    'Work'
-  ),
-];
-
-const primaryProject = new Project('Home', primaryTasks);
-const secondaryProject = new Project('Work', secondaryTasks);
-
-addProject(primaryProject);
-addProject(secondaryProject);
+import {
+  getProjects,
+  addProject,
+  getAllTasks,
+  setCompletion,
+  addTask,
+} from './site-storage';
 
 let selectedProject = getProjects()[0];
 let taskToEdit = '';
@@ -66,7 +38,7 @@ function createTask() {
   const task = getTaskInformation(selectedProject);
 
   // Add task to the selected project's array of tasks
-  selectedProject.addTask(task);
+  addTask(selectedProject, task);
 }
 
 // This is a conditional that determines if you're looking at the task list or the task form.
@@ -169,7 +141,7 @@ sidebar.addEventListener('click', (e) => {
 
   if (projectButton) {
     // Save the data-id of the project button as the project id
-    const projectId = parseInt(projectButton.getAttribute('data-id'), 10);
+    const projectId = projectButton.getAttribute('data-id');
 
     // Save the getProjects() array into projects
     const projects = getProjects();
@@ -263,14 +235,18 @@ taskList.addEventListener('submit', (e) => {
 
 // Change task completion status on checkbox change
 taskList.addEventListener('change', (e) => {
-  taskId = parseInt(e.target.nextElementSibling.getAttribute('data-id'), 10);
+  if (!e.target.classList.contains('checkbox-field')) {
+    return;
+  }
+  taskId = e.target.nextElementSibling.getAttribute('data-id');
   const allTasks = getAllTasks();
   const taskChanged = allTasks.find((task) => task.id === taskId);
+
   if (e.target.checked) {
-    taskChanged.completion = true;
+    setCompletion(taskChanged, true);
     console.log(taskChanged);
   } else {
-    taskChanged.completion = false;
+    setCompletion(taskChanged, false);
     console.log(taskChanged);
   }
 });
