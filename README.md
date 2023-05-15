@@ -1,23 +1,26 @@
-# Getting Started
-1. Use this template to create a new repository on Github
-2. Clone your new repository from Github to your local environment
-3. Update project name and other relevant attributes in package.json
-4. Install dependencies (`npm install`)
-5. Generate assets (`npm run build`)
-6. Run server (`npm start`)
+# Todo List
 
-# Setting up Github Workflow to Deploy Web App
-1. Create SSH deploy key
-    Generate your deploy key with the following command:
-    ```
-    ssh-keygen -t rsa -b 4096 -C "$(git config user.email)" -f gh-pages -N ""
-    ```
-    You will get 2 files:
-    - `gh-pages.pub` is a public key
-    - `gh-pages` is a private key
+![Todo List Demo](./todo-list-demo.gif)
 
-2. Set SSH deploy keys in Github repository settings
-   1. Go to Deploy Keys and add your public key with the Allow write access
-   2. Go to Secrets and add your private key as `DEPLOY_KEY`
+Organize and keep track of tasks:
 
-3. Clean up the two now unnecessary gh-pages files on the local system
+- Save todo items in custom folders
+- View, edit, delete, and check off todo items
+- Filter todo items by week or current day
+- Local storage stores project and task information
+
+# Built Using
+
+- JavaScript
+- CSS
+- Date-fns library
+- Local storage
+- Webpack
+
+[Live Demo](https://kristenmazza.github.io/todo-list/) :point_left:
+
+# Set Up Instructions
+
+1. Install dependencies (`npm install`)
+2. Generate assets (`npm run build`)
+3. Run server (`npm start`)
