@@ -2,6 +2,8 @@
 
 ![Todo List Demo](./todo-list-demo.gif)
 
+[Live Demo](https://kristenmazza.github.io/todo-list/) :point_left:
+
 Organize and keep track of tasks:
 
 - Save todo items in custom folders
@@ -16,8 +18,6 @@ Organize and keep track of tasks:
 - Date-fns library
 - Local storage
 - Webpack
-
-[Live Demo](https://kristenmazza.github.io/todo-list/) :point_left:
 
 # Set Up Instructions
 
