@@ -441,7 +441,7 @@ export function updateTaskInformation(taskToEdit) {
   const updatedTask = taskToEdit;
   updatedTask.title = document.getElementById('task-name').value;
   updatedTask.description = document.getElementById('task-description').value;
-  updatedTask.dueDate = document.getElementById('due-date').value;
+  updatedTask.dueDate = new Date(document.getElementById('due-date').value);
   updatedTask.priority = document.getElementById('priority').value;
 
   return updatedTask;
